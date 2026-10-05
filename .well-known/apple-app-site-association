@@ -1,0 +1,26 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": [
+          "L22947U4P5.com.talkatz.ride"
+        ],
+        "components": [
+          {
+            "/": "/sso-callback",
+            "comment": "Clerk SSO callback"
+          },
+          {
+            "/": "/r/*",
+            "comment": "shared reports"
+          }
+        ]
+      }
+    ]
+  },
+  "webcredentials": {
+    "apps": [
+      "L22947U4P5.com.talkatz.ride"
+    ]
+  }
+}

@@ -65,11 +65,15 @@ main.landing{max-width:none;padding:0;margin:0}
 @media (min-width:768px){.hero{min-height:min(92dvh,900px);align-items:center}.hero .bg{object-position:20% 50%}.hero .in{padding:120px 24px 96px}
 .hero .shade{background:linear-gradient(to left,rgba(18,22,28,.9) 0%,rgba(18,22,28,.62) 34%,rgba(18,22,28,.12) 58%,rgba(18,22,28,0) 100%)}}
 @media (min-width:1100px){.hero .in{padding:140px 24px 120px}.hero .copy{max-width:640px}}
-/* Stats strip */
-.stats{padding:0;margin-top:0}.stats .wrap{display:grid;grid-template-columns:repeat(2,1fr);gap:20px 16px;padding-top:40px;padding-bottom:0}
-.stats .n{font-family:Unbounded,Heebo,sans-serif;font-weight:800;font-size:clamp(26px,3vw,36px);color:var(--accent);direction:ltr;unicode-bidi:isolate;line-height:1.1}
-.stats .l{color:var(--muted);font-size:15px;margin-top:6px}
-@media (min-width:768px){.stats .wrap{grid-template-columns:repeat(4,1fr);border-top:1px solid var(--border);padding-top:36px}}
+/* Stats strip: four cards, number and label both start-aligned (RTL), digits stay digits. */
+.stats{padding:0;margin-top:0}.stats .wrap{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding-top:40px;padding-bottom:0}
+.stats .stat{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:22px 22px 20px;text-align:start;position:relative;overflow:hidden;transition:transform .25s,border-color .25s}
+.stats .stat::before{content:"";position:absolute;inset-inline-start:0;top:18px;bottom:18px;width:4px;border-radius:4px;background:var(--accent)}
+.stats .stat:hover{transform:translateY(-3px);border-color:var(--accent)}
+.stats .n{font-family:Unbounded,Heebo,sans-serif;font-weight:800;font-size:clamp(26px,3vw,36px);color:var(--accent);line-height:1.1;text-align:start;display:block}
+.stats .n bdi{font-family:Heebo,sans-serif;font-weight:700;font-size:.55em;margin-inline-start:6px;vertical-align:baseline}
+.stats .l{color:var(--muted);font-size:15px;margin-top:8px;line-height:1.4}
+@media (min-width:768px){.stats .wrap{grid-template-columns:repeat(4,1fr);gap:16px;padding-top:40px}}
 /* Feature cards */
 .features .grid{display:grid;gap:24px;grid-template-columns:1fr}
 @media (min-width:768px){.features .grid{grid-template-columns:1fr 1fr}}
@@ -84,7 +88,7 @@ main.landing{max-width:none;padding:0;margin:0}
 .how{background:var(--surface);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .steps{display:grid;gap:28px;grid-template-columns:1fr;counter-reset:step;list-style:none;padding:0;margin:0}
 @media (min-width:768px){.steps{grid-template-columns:repeat(3,1fr);gap:32px}}
-.steps li{position:relative;padding-top:8px}.steps .num{font-family:Unbounded,Heebo,sans-serif;font-weight:800;font-size:40px;color:var(--accent);line-height:1;margin-bottom:14px;direction:ltr;display:block}
+.steps li{position:relative;padding-top:8px}.steps .num{font-family:Unbounded,Heebo,sans-serif;font-weight:800;font-size:40px;color:var(--accent);line-height:1;margin-bottom:14px;text-align:start;display:block}
 .steps h3{font-size:22px;margin:0 0 6px}.steps p{color:var(--muted);margin:0}
 /* Gallery */
 .gallery{padding-bottom:40px}
@@ -140,10 +144,10 @@ main.landing{max-width:none;padding:0;margin:0}
 
 <section class="stats" aria-label="נתונים">
 <div class="wrap">
-<div data-reveal style="--d:0s"><div class="n" data-count="10">10</div><div class="l">מצלמות אכיפה לקורקינטים</div></div>
-<div data-reveal style="--d:.08s"><div class="n" data-count="174">174</div><div class="l">מצלמות עירוניות</div></div>
-<div data-reveal style="--d:.16s"><div class="n" data-count="200" data-suffix=" ק״מ">200 ק״מ</div><div class="l">שבילי אופניים</div></div>
-<div data-reveal style="--d:.24s"><div class="n" data-count="45" data-suffix=" דק׳">45 דק׳</div><div class="l">עד שדיווח פקחים נמחק מעצמו</div></div>
+<div class="stat" data-reveal style="--d:0s"><div class="n"><span data-count="10">10</span></div><div class="l">מצלמות אכיפה לקורקינטים</div></div>
+<div class="stat" data-reveal style="--d:.08s"><div class="n"><span data-count="174">174</span></div><div class="l">מצלמות עירוניות</div></div>
+<div class="stat" data-reveal style="--d:.16s"><div class="n"><span data-count="200">200</span><bdi>ק״מ</bdi></div><div class="l">שבילי אופניים</div></div>
+<div class="stat" data-reveal style="--d:.24s"><div class="n"><span data-count="45">45</span><bdi>דק׳</bdi></div><div class="l">דיווח פקחים נמחק מעצמו</div></div>
 </div>
 </section>
 
@@ -204,7 +208,7 @@ var h=d.querySelector("header");function onS(){h.classList.toggle("scrolled",scr
 var items=[].slice.call(d.querySelectorAll("[data-reveal]"));
 if(rm||!("IntersectionObserver" in window)){items.forEach(function(e){e.classList.add("in")})}
 else{var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting||x.boundingClientRect.top<0){x.target.classList.add("in");io.unobserve(x.target);var n=x.target.querySelector("[data-count]");if(n)count(n)}})},{rootMargin:"0px 0px -10% 0px",threshold:.15});items.forEach(function(e){io.observe(e)})}
-function count(n){var to=+n.dataset.count,suf=n.dataset.suffix||"",t0=performance.now(),dur=1100;function f(t){var p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);n.textContent=Math.round(to*e)+suf;if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)}
+function count(n){var to=+n.dataset.count,suf="",t0=performance.now(),dur=1100;function f(t){var p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);n.textContent=Math.round(to*e)+suf;if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)}
 var bg=d.querySelector(".hero .bg");
 if(bg&&!rm){var tick=false;addEventListener("scroll",function(){if(tick)return;tick=true;requestAnimationFrame(function(){var y=Math.min(scrollY,900);bg.style.translate="0 "+(y*0.18)+"px";tick=false})},{passive:true})}
 })();

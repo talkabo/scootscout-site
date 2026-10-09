@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>גישה מוקדמת · ScootScout</title>
+<meta name="description" content="הירשמו לגישה מוקדמת ל-ScootScout וקבלו במייל קישור להתקנה דרך TestFlight.">
+<meta name="theme-color" content="#12161C" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
+<link rel="icon" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<meta property="og:title" content="ScootScout · גישה מוקדמת">
+<meta property="og:description" content="התנסו ראשונים: קישור להתקנה דרך TestFlight במייל.">
+<meta property="og:image" content="https://scootscout.com/img/hero.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&family=Unbounded:wght@800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark light;--bg:#12161C;--surface:#1A1F27;--text:#EEF3EF;--muted:#9FB3A8;--accent:#FF8A33;--on-accent:#12161C;--green:#4ADE80;--red:#FF4D4F;--insp:#B91C1C;--border:#313947;--link:#FF8A33;--ring:#FF8A33}
+@media (prefers-color-scheme: light){:root{--bg:#F4F1EA;--surface:#FFFFFF;--text:#12161C;--muted:#5B6470;--accent:#FF7A1A;--on-accent:#12161C;--green:#22C55E;--red:#E5383B;--insp:#7F1D1D;--border:#E3DED3;--link:#A8480A;--ring:#FF7A1A}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Heebo,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.65;overflow-x:hidden}
+img{max-width:100%}
+:focus-visible{outline:3px solid var(--ring);outline-offset:3px;border-radius:6px}
+header{position:sticky;top:0;z-index:50;padding:14px 16px;border-bottom:1px solid transparent;background:color-mix(in srgb,var(--bg) 72%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);transition:border-color .3s,background .3s}header.scrolled{border-bottom-color:var(--border);background:color-mix(in srgb,var(--bg) 86%,transparent)}header .top{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap}
+header .logo{display:inline-flex;align-items:center;gap:10px;direction:ltr;color:var(--text);text-decoration:none;font-family:Unbounded,Heebo,sans-serif;font-weight:800;font-size:20px;letter-spacing:-.02em}
+header .logo svg{width:30px;height:30px;flex:none}header .logo b{font-weight:inherit}header .logo span{color:var(--accent)}
+header nav{display:flex;gap:4px 18px;flex-wrap:wrap;margin-inline-start:auto}header nav a{color:var(--muted);font-size:15px;text-decoration:none;padding:4px 0;transition:color .2s}header nav a:hover{color:var(--text)}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:var(--on-accent);font-weight:700;padding:12px 22px;border-radius:14px;text-decoration:none;line-height:1.2;cursor:pointer;transition:filter .2s,transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}.cta:hover{filter:brightness(1.07);transform:translateY(-2px)}.cta:active{transform:translateY(0) scale(.98)}
+.cta.small{padding:9px 16px;font-size:14px;border-radius:12px}
+@media (max-width:767px){header .cta.small{display:none}}
+main{max-width:760px;margin:0 auto;padding:24px 16px 64px}h1{font-size:32px;line-height:1.2;margin:8px 0 16px}h2{font-size:22px;margin:32px 0 8px}
+p,li{font-size:16px}a{color:var(--link)}table{border-collapse:collapse;width:100%;font-size:14px;margin:12px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--border);padding:8px;text-align:right;vertical-align:top}th{background:var(--surface)}
+footer{color:var(--muted);font-size:13px;padding:28px 16px;border-top:1px solid var(--border);text-align:center}footer nav{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:10px}footer nav a{color:var(--muted);text-decoration:none}footer nav a:hover{color:var(--text)}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+main.early{max-width:1100px;padding:40px 16px 72px}
+.early .grid{display:grid;gap:32px}
+@media (min-width:900px){.early .grid{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:start}}
+.early h1{font-size:clamp(34px,5vw,56px);line-height:1.08;font-weight:900;letter-spacing:-.015em;margin:0 0 16px}
+.early h1 em{font-style:normal;color:var(--accent)}
+.early .lead{color:var(--muted);font-size:18px;margin:0 0 28px}
+.early ul.perks{list-style:none;padding:0;margin:0 0 24px;display:grid;gap:12px}
+.early ul.perks li{display:flex;gap:12px;align-items:flex-start}.early ul.perks svg{width:22px;height:22px;flex:none;color:var(--accent);margin-top:3px}
+.early .small{color:var(--muted);font-size:14px}
+.form{background:var(--surface);border:1px solid var(--border);border-radius:28px;padding:28px 24px;box-shadow:0 30px 60px rgba(0,0,0,.25)}
+.form h2{font-size:22px;margin:0 0 6px}.form .sub{color:var(--muted);font-size:15px;margin:0 0 22px}
+.field{display:block;margin:0 0 16px}.field span{display:block;font-weight:600;font-size:15px;margin-bottom:6px}
+.field input{width:100%;font:inherit;font-size:16px;color:var(--text);background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:13px 14px;transition:border-color .2s,box-shadow .2s}
+.field input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 4px color-mix(in srgb,var(--accent) 22%,transparent)}
+.field input[aria-invalid="true"]{border-color:var(--red)}
+.field .err{display:none;color:var(--red);font-size:14px;margin-top:6px}.field.invalid .err{display:block}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:14px;color:var(--muted);margin:4px 0 20px;cursor:pointer}
+.consent input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--accent);flex:none}
+.hp{position:absolute;left:-9999px;top:-9999px;height:0;overflow:hidden}
+.form .cta{width:100%;font-size:17px;padding:15px 20px;border-radius:16px}
+.form .cta[disabled]{opacity:.6;cursor:progress;transform:none}
+.form .status{display:none;margin-top:16px;padding:14px 16px;border-radius:14px;font-size:15px;line-height:1.5}
+.form .status.err{display:block;background:color-mix(in srgb,var(--red) 14%,transparent);color:var(--text)}
+.done{display:none;text-align:center;padding:12px 0}
+.done .ok{width:64px;height:64px;border-radius:50%;background:color-mix(in srgb,var(--green) 18%,transparent);color:var(--green);display:grid;place-items:center;margin:0 auto 16px}.done .ok svg{width:34px;height:34px}
+.done h2{margin:0 0 8px}.done p{color:var(--muted);margin:0 0 6px}
+.form.sent form{display:none}.form.sent .done{display:block}
+</style>
+</head>
+<body>
+<header><div class="top"><a href="/" class="logo" aria-label="ScootScout"><svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="22.37" fill="#FF6A13"/><path d="M68 26 C58 17 32 19 32 35 C32 50 68 47 68 63 C68 79 42 82 31 73" fill="none" stroke="#12161C" stroke-width="15" stroke-linecap="round"/><path d="M68 26 C58 17 32 19 32 35 C32 50 68 47 68 63 C68 79 42 82 31 73" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="4.5 5"/><circle cx="68" cy="26" r="7.5" fill="#FFFFFF"/><circle cx="68" cy="26" r="3.2" fill="#12161C"/></svg><b>Scoot<span>Scout</span></b></a>
+<nav aria-label="ניווט ראשי"><a href="/early-access">גישה מוקדמת</a><a href="/support">תמיכה</a><a href="/privacy">פרטיות</a><a href="/terms">תנאים</a></nav><a class="cta small" href="/early-access">גישה מוקדמת</a></div></header>
+<main class="early">
+<div class="grid">
+<div>
+<p class="eyebrow" style="color:var(--accent);font-weight:700;font-size:14px;margin:0 0 12px">גישה מוקדמת · iPhone</p>
+<h1>התנסו ראשונים. <em>לפני כולם.</em></h1>
+<p class="lead">ScootScout עדיין לא בחנות. מי שנרשם כאן מקבל במייל קישור להתקנה דרך TestFlight של Apple, ורוכב עם המצלמות על המפה כבר עכשיו.</p>
+<ul class="perks">
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>התראה בקול וברטט 150 מטר לפני כל מצלמת אכיפה</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>ניווט שמעדיף שבילי אופניים, עם מסלול שעוקף מצלמות</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>דיווחי פקחים בזמן אמת מרוכבים אחרים</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>הפידבק שלכם קובע מה נכנס לגרסה הבאה</span></li>
+</ul>
+<p class="small">דרוש iPhone עם iOS 17 ומעלה ואפליקציית TestFlight (חינם ב-App Store). הקישור אישי, אל תעבירו אותו הלאה.</p>
+</div>
+<div class="form" id="form">
+<form id="early" novalidate>
+<h2>השאירו פרטים</h2>
+<p class="sub">הקישור יגיע למייל תוך דקה.</p>
+<label class="field"><span>שם מלא</span><input name="name" type="text" autocomplete="name" required minlength="2" maxlength="80" placeholder="דנה לוי"><em class="err">כתבו שם מלא (לפחות 2 תווים).</em></label>
+<label class="field"><span>אימייל</span><input name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" placeholder="dana@example.com" dir="ltr" style="text-align:right"><em class="err">כתובת האימייל לא תקינה.</em></label>
+<label class="hp" aria-hidden="true">אתר<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
+<label class="consent"><input name="consent" type="checkbox" required><span>קראתי את <a href="/privacy">מדיניות הפרטיות</a> ואני מסכים/ה לקבל מייל אחד עם קישור ההתקנה.</span></label>
+<button class="cta" type="submit">שלחו לי את הקישור</button>
+<p class="status" role="alert" aria-live="polite"></p>
+</form>
+<div class="done">
+<div class="ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+<h2 id="done-title">הקישור בדרך למייל</h2>
+<p id="done-text">בדקו את תיבת הדואר (וגם את הספאם). פותחים את הקישור בטלפון, מתקינים דרך TestFlight, ורוכבים.</p>
+<p class="small">לא הגיע תוך כמה דקות? כתבו ל-<a href="mailto:support@scootscout.com">support@scootscout.com</a>.</p>
+</div>
+</div>
+</div>
+</main>
+<script>
+(function(){
+var box=document.getElementById("form"),f=document.getElementById("early"),st=f.querySelector(".status"),btn=f.querySelector("button");
+function fieldOf(i){return i.closest(".field")}
+function validate(i){var ok=i.checkValidity();var fl=fieldOf(i);if(fl){fl.classList.toggle("invalid",!ok)}i.setAttribute("aria-invalid",ok?"false":"true");return ok}
+["name","email"].forEach(function(n){var i=f.elements[n];i.addEventListener("blur",function(){validate(i)});i.addEventListener("input",function(){if(fieldOf(i).classList.contains("invalid"))validate(i)})});
+f.addEventListener("submit",async function(e){
+e.preventDefault();st.className="status";st.textContent="";
+var ok=validate(f.elements.name)&validate(f.elements.email);
+if(!f.elements.consent.checked){st.className="status err";st.textContent="צריך לאשר את מדיניות הפרטיות כדי שנוכל לשלוח את הקישור.";ok=0}
+if(!ok){var first=f.querySelector('[aria-invalid="true"]');if(first)first.focus();return}
+btn.disabled=true;var label=btn.textContent;btn.textContent="שולחים…";
+try{
+var r=await fetch("https://scootscout-api.replit.app/early-access",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:f.elements.name.value.trim(),email:f.elements.email.value.trim(),consent:true,website:f.elements.website.value||undefined,source:"site"})});
+var data=null;try{data=await r.json()}catch(_){}
+if(r.status===429){throw new Error("יותר מדי ניסיונות מהרשת הזו. נסו שוב בעוד שעה.")}
+if(!r.ok||!data||!data.ok){throw new Error((data&&data.error&&data.error.message)||"משהו השתבש בדרך. נסו שוב בעוד רגע.")}
+if(!data.emailed){document.getElementById("done-title").textContent="נרשמתם!";document.getElementById("done-text").textContent="הקישור להתקנה יישלח למייל שלכם ברגע שהסבב הבא נפתח. בלי ספאם, מייל אחד."}
+box.classList.add("sent");box.scrollIntoView({behavior:"smooth",block:"center"});
+}catch(err){st.className="status err";st.textContent=(err instanceof TypeError)?"לא הצלחנו להגיע לשרת. בדקו את החיבור ונסו שוב, או כתבו ל-support@scootscout.com.":(err&&err.message?err.message:"משהו השתבש. נסו שוב.");btn.disabled=false;btn.textContent=label}
+});
+})();
+</script>
+<footer><nav aria-label="קישורים"><a href="/early-access">גישה מוקדמת</a><a href="/support">תמיכה</a><a href="/privacy">מדיניות פרטיות</a><a href="/terms">תנאי שימוש</a></nav>© 2026 ScootScout · scootscout.com</footer>
+</body>
+</html>

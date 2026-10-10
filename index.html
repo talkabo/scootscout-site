@@ -3,16 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>המפה של רוכבי הקורקינט בתל אביב · ScootScout</title>
-<meta name="description" content="מצלמות אכיפה, פקחים בשטח וניווט בשבילי אופניים, במפה אחת. לרוכבי קורקינט ואופניים חשמליים בתל אביב-יפו, בחינם בגישה המוקדמת.">
+<title>האפליקציה של רוכבי הקורקינט בתל אביב · ScootScout</title>
+<meta name="description" content="ניווט קולי בעברית בשבילי אופניים, דיווחי פקחים בזמן אמת מהרוכבים ומצלמות על המפה. האפליקציה של רוכבי הקורקינט והאופניים החשמליים בתל אביב.">
 <meta name="theme-color" content="#12161C" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="ScootScout">
-<meta property="og:title" content="המפה של רוכבי הקורקינט בתל אביב | ScootScout">
-<meta property="og:description" content="מצלמות אכיפה, פקחים בשטח וניווט בשבילי אופניים, במפה אחת. לרוכבי קורקינט ואופניים חשמליים בתל אביב-יפו, בחינם בגישה המוקדמת.">
+<meta property="og:title" content="האפליקציה של רוכבי הקורקינט בתל אביב | ScootScout">
+<meta property="og:description" content="ניווט קולי בעברית בשבילי אופניים, דיווחי פקחים בזמן אמת מהרוכבים ומצלמות על המפה. האפליקציה של רוכבי הקורקינט והאופניים החשמליים בתל אביב.">
 <meta property="og:url" content="https://scootscout.com/">
 <meta property="og:image" content="https://scootscout.com/img/hero.jpg">
 <meta property="og:locale" content="he_IL">
@@ -75,10 +75,11 @@ main.landing{max-width:none;padding:0;margin:0}
 .stats .n{font-family:Unbounded,Heebo,sans-serif;font-weight:800;font-size:clamp(26px,3vw,36px);color:var(--accent);line-height:1.1;text-align:start;display:block}
 .stats .n bdi{font-family:Heebo,sans-serif;font-weight:700;font-size:.55em;margin-inline-start:6px;vertical-align:baseline}
 .stats .l{color:var(--muted);font-size:15px;margin-top:8px;line-height:1.4}
-@media (min-width:768px){.stats .wrap{grid-template-columns:repeat(4,1fr);gap:16px;padding-top:40px}}
+@media (min-width:768px){.stats .wrap{grid-template-columns:repeat(3,1fr);gap:16px;padding-top:40px}}
+.stats .n bdi.pre{margin-inline-start:0;margin-inline-end:4px}
 /* Feature cards */
 .features .grid{display:grid;gap:24px;grid-template-columns:1fr}
-@media (min-width:768px){.features .grid{grid-template-columns:1fr 1fr}}
+@media (min-width:768px){.features .grid{grid-template-columns:1fr 1fr}.features .grid.three{grid-template-columns:repeat(3,1fr)}}
 .card{background:var(--surface);border:1px solid var(--border);border-radius:28px;padding:32px 28px 0;display:flex;flex-direction:column;overflow:hidden;transition:transform .25s,border-color .25s}
 .card:hover{transform:translateY(-3px);border-color:var(--accent)}
 .card .icon{width:60px;height:60px;border-radius:18px;display:grid;place-items:center;background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent);margin-bottom:18px}.card .icon svg{width:36px;height:36px}
@@ -92,6 +93,12 @@ main.landing{max-width:none;padding:0;margin:0}
 @media (min-width:768px){.steps{grid-template-columns:repeat(3,1fr);gap:32px}}
 .steps li{position:relative;padding-top:8px}.steps .num{font-family:Unbounded,Heebo,sans-serif;font-weight:800;font-size:40px;color:var(--accent);line-height:1;margin-bottom:14px;text-align:start;display:block}
 .steps h3{font-size:22px;margin:0 0 6px}.steps p{color:var(--muted);margin:0}
+/* Rules (the app's "before you ride" sheet) */
+.rules .wrap{max-width:820px}.rules .list{background:var(--surface);border:1px solid var(--border);border-radius:24px;padding:4px 22px}
+.rules .rule{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;border-top:1px solid var(--border)}.rules .rule:first-child{border-top:0}
+.rules .rule h3{font-size:19px;margin:0 0 2px}.rules .rule p{color:var(--muted);margin:0;font-size:15px}
+.rules .fine{flex:none;font-family:Unbounded,Heebo,sans-serif;font-weight:800;font-size:15px;color:#fff;background:var(--red);border-radius:12px;padding:8px 12px;direction:ltr;unicode-bidi:isolate}
+.rules .after{margin:20px 0 6px;font-size:17px}.rules .fineprint{color:var(--muted);font-size:13px;margin:0}
 /* Gallery */
 .gallery{padding-bottom:40px}
 .gallery .track{display:flex;gap:24px;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;padding:12px max(16px,calc((100% - 1200px)/2 + 16px)) 28px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;-webkit-overflow-scrolling:touch}
@@ -114,7 +121,7 @@ main.landing{max-width:none;padding:0;margin:0}
 .hero .bg{transform:scale(1.08);transform-origin:50% 60%;animation:heroZoom 14s cubic-bezier(.2,.6,.2,1) forwards;will-change:transform}
 @keyframes heroZoom{to{transform:scale(1)}}
 .hero .copy>*{opacity:0;transform:translateY(22px);animation:rise .8s cubic-bezier(.2,.8,.2,1) forwards}
-.hero .eyebrow{animation-delay:.15s}.hero h1{animation-delay:.3s}.hero .sub{animation-delay:.45s}.hero .pain{animation-delay:.58s}.hero .actions{animation-delay:.7s}.hero .under{animation-delay:.8s}
+.hero .eyebrow{animation-delay:.15s}.hero h1{animation-delay:.3s}.hero .sub{animation-delay:.45s}.hero .actions{animation-delay:.6s}.hero .under{animation-delay:.72s}
 @keyframes rise{to{opacity:1;transform:none}}
 .hero .cta{position:relative;overflow:hidden}.hero .cta::after{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);transform:translateX(-120%);animation:sheen 3.6s ease-in-out 1.6s infinite}
 @keyframes sheen{0%{transform:translateX(-120%)}35%,100%{transform:translateX(120%)}}
@@ -141,10 +148,9 @@ main.landing{max-width:none;padding:0;margin:0}
 <img class="bg" src="/img/hero.jpg" alt="" width="1344" height="752" fetchpriority="high"><div class="shade"></div>
 <div class="in">
 <div class="copy">
-<p class="eyebrow">לרוכבי קורקינט ואופניים חשמליים בתל אביב-יפו</p>
-<h1 id="h1">רוכבים בראש שקט. <em>המצלמות כבר על המפה.</em></h1>
-<p class="sub">מצלמות אכיפה, פקחים בשטח ושבילי אופניים, במפה אחת. 150 מטר לפני מצלמת אכיפה לקורקינטים תשמעו צליל ותרגישו רטט, ורוכבים אחרים מעדכנים איפה יש פקחים.</p>
-<p class="pain"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3.5h14v17l-2.3-1.4-2.4 1.4-2.3-1.4-2.3 1.4-2.4-1.4L5 20.5z"/><path d="M9 8.5h6M9 12h6M9 15.5h3.5"/></svg><span>רכיבה על המדרכה: קנס של 250 ₪. במפה רואים איפה עוברים שבילי האופניים.</span></p>
+<p class="eyebrow">לרוכבי קורקינט ואופניים חשמליים</p>
+<h1 id="h1">האפליקציה של הרוכבים <em>בתל אביב.</em></h1>
+<p class="sub">ניווט בעברית בשבילי האופניים, דיווחי פקחים בזמן אמת מהרוכבים, ומצלמות על המפה. כל מה שצריך לרכיבה בעיר, במקום אחד.</p>
 <div class="actions"><a class="cta" href="/early-access">נסו ראשונים</a><a class="btn-link" href="#how">איך זה עובד <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10l6 6 6-6"/></svg></a></div>
 <p class="under">חינם בגישה המוקדמת · כרגע ל-iPhone, ובהמשך גם לאנדרואיד</p>
 </div>
@@ -153,22 +159,20 @@ main.landing{max-width:none;padding:0;margin:0}
 
 <section class="stats" aria-label="נתונים">
 <div class="wrap">
-<div class="stat" data-reveal style="--d:0s"><div class="n"><span data-count="10">10</span></div><div class="l">מצלמות אכיפה לקורקינטים, עם התראה</div></div>
-<div class="stat" data-reveal style="--d:.08s"><div class="n"><span data-count="174">174</span></div><div class="l">מצלמות נת״צ ונץ על המפה</div></div>
-<div class="stat" data-reveal style="--d:.16s"><div class="n"><span data-count="200">200</span><bdi>ק״מ</bdi></div><div class="l">שבילי אופניים</div></div>
-<div class="stat" data-reveal style="--d:.24s"><div class="n"><span data-count="150">150</span><bdi>מ׳</bdi></div><div class="l">מרחק ההתראה</div></div>
+<div class="stat" data-reveal style="--d:0s"><div class="n"><bdi class="pre">כ-</bdi><span data-count="200">200</span><bdi>ק״מ</bdi></div><div class="l">שבילי אופניים במפה</div></div>
+<div class="stat" data-reveal style="--d:.08s"><div class="n"><span data-count="3">3</span></div><div class="l">מסלולים לכל יעד</div></div>
+<div class="stat" data-reveal style="--d:.16s"><div class="n"><span data-count="10">10</span></div><div class="l">מצלמות אכיפה לקורקינטים במפה</div></div>
 </div>
 </section>
 
 <section class="features" aria-labelledby="h-features">
 <div class="wrap">
 <h2 id="h-features" data-reveal>מה יש באפליקציה</h2>
-<p class="lead" data-reveal style="--d:.1s">מה שרוכבים בתל אביב צריכים. בלי תוספות.</p>
-<div class="grid">
-<article class="card" data-reveal style="--d:0s"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="3.5" width="9.5" height="6" rx="1.8"/><circle cx="11.6" cy="6.5" r="1.4" fill="currentColor"/><path d="M15.5 6.5h1.4"/><path d="M18 9.5v11"/><path d="M15 20.5h6"/><path d="M6.8 11.8a4.6 4.6 0 0 0 0 5.4"/><path d="M4 9.6a8 8 0 0 0 0 9.8"/><path d="M2.5 20.5h9" stroke-dasharray="2 2.6"/></svg></div><h3>התראה לפני המצלמה</h3><p>150 מטר לפני מצלמת אכיפה לקורקינטים: צליל, רטט וכרטיס אדום עם המרחק שנשאר. לא צריך להסתכל על המסך.</p><div class="shot"><div class="phone" style="--pw:250px"><img src="/img/alert-70.png" alt="מצב רכיבה: כרטיס התראה אדום, 70 מטר למצלמה" width="640" height="1391" loading="lazy" decoding="async"></div></div></article>
-<article class="card" data-reveal style="--d:0.1s"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.6 7.2a3.4 3.4 0 0 1 6.8 0"/><path d="M7.6 7.4h9.6"/><path d="M9 7.4a3 3 0 0 0 6 0"/><path d="M4.5 21c0-3.6 3.2-6.2 7.5-6.2s7.5 2.6 7.5 6.2"/><path d="M12 13.6l2.6 1v2c0 1.6-1 3-2.6 3.7-1.6-.7-2.6-2.1-2.6-3.7v-2z" fill="currentColor" stroke="none"/><path d="M19.5 3.5l1 1.8M21.2 7.2l1.3.3" stroke-width="1.6"/></svg></div><h3>פקחים בשטח? הרוכבים מדווחים</h3><p>ראיתם פקחים? פותחים דיווח בלחיצה אחת ממסך הרכיבה ומסמנים איפה הם, על המדרכה או בכביש, וכמה פקחים יש. כל מי שבסביבה מקבל באנר עם הרחוב והשעה. מי שעובר אחריכם יכול לאשר שהפקחים עדיין שם, או לסמן שכבר לא.</p><div class="shot"><div class="phone" style="--pw:250px"><img src="/img/insp-70.png" alt="מצב רכיבה: באנר פקחים בשטח, 70 מטר" width="640" height="1391" loading="lazy" decoding="async"></div></div></article>
-<article class="card" data-reveal style="--d:0.2s"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 3.6C18.2 2.4 12 2.6 12 5.4s7.2 2.4 7.2 5.2c0 2.3-3.2 3.1-5.4 2.6" stroke-dasharray="2.4 2.2"/><circle cx="19.5" cy="3.6" r="1.3" fill="currentColor" stroke="none"/><circle cx="5.5" cy="19.5" r="1.9"/><circle cx="14.5" cy="19.5" r="1.9"/><path d="M7.4 19.5h5.2"/><path d="M14.5 19.5l2.2-6.2"/><path d="M15.4 13.3h3.4"/></svg></div><h3>ניווט בשבילי אופניים</h3><p>שלושה מסלולים לכל יעד, ולכל מסלול מוצג כמה ממנו עובר בשבילי אופניים. בוחרים את מה שמתאים לכם.</p><div class="shot"><div class="phone" style="--pw:250px"><img src="/img/routes.png" alt="גיליון אפשרויות מסלול עם אחוז שבילי אופניים לכל מסלול" width="640" height="1391" loading="lazy" decoding="async"></div></div></article>
-<article class="card" data-reveal style="--d:0.30000000000000004s"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.3" y="3.2" width="7.4" height="12.6" rx="1.9"/><path d="M11 5.4h2"/><rect x="10.1" y="7.2" width="3.8" height="6" rx=".8" fill="currentColor" stroke="none" opacity=".9"/><path d="M12 15.8v3"/><path d="M4.5 18.8h15"/><path d="M2.5 18.8c0-1.3.9-2.2 2-2.2M21.5 18.8c0-1.3-.9-2.2-2-2.2"/><path d="M6.5 21.5h3M14.5 21.5h3" stroke-width="2.4"/></svg></div><h3>מותאמת לכידון</h3><p>תצוגה כהה, מסך שנשאר דלוק לאורך כל הרכיבה, והתראות בקול וברטט, גם כשמוזיקה מתנגנת. העיניים נשארות על הדרך.</p><div class="shot"><div class="phone" style="--pw:250px"><img src="/img/insp-110.png" alt="מצב רכיבה בלילה: המפה עוקבת, כפתור השתקה ומד מהירות" width="640" height="1391" loading="lazy" decoding="async"></div></div></article>
+<p class="lead" data-reveal style="--d:.1s">שלושה דברים, אפליקציה אחת.</p>
+<div class="grid three">
+<article class="card" data-reveal style="--d:0s"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19.5 3.6C18.2 2.4 12 2.6 12 5.4s7.2 2.4 7.2 5.2c0 2.3-3.2 3.1-5.4 2.6" stroke-dasharray="2.4 2.2"/><circle cx="19.5" cy="3.6" r="1.3" fill="currentColor" stroke="none"/><circle cx="5.5" cy="19.5" r="1.9"/><circle cx="14.5" cy="19.5" r="1.9"/><path d="M7.4 19.5h5.2"/><path d="M14.5 19.5l2.2-6.2"/><path d="M15.4 13.3h3.4"/></svg></div><h3>ניווט בעברית, בשבילים</h3><p>בוחרים יעד ומקבלים שלושה מסלולים, ולכל אחד רואים איזה חלק ממנו עובר בשבילי אופניים. ההנחיות קוליות, בעברית ועם שמות הרחובות, והעיניים נשארות על הדרך. הפנייה הבאה מופיעה גם במסך הנעילה.</p><div class="shot"><div class="phone" style="--pw:250px"><img src="/img/routes.png" alt="גיליון אפשרויות מסלול עם אחוז שבילי אופניים לכל מסלול" width="640" height="1391" loading="lazy" decoding="async"></div></div></article>
+<article class="card" data-reveal style="--d:0.1s"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.6 7.2a3.4 3.4 0 0 1 6.8 0"/><path d="M7.6 7.4h9.6"/><path d="M9 7.4a3 3 0 0 0 6 0"/><path d="M4.5 21c0-3.6 3.2-6.2 7.5-6.2s7.5 2.6 7.5 6.2"/><path d="M12 13.6l2.6 1v2c0 1.6-1 3-2.6 3.7-1.6-.7-2.6-2.1-2.6-3.7v-2z" fill="currentColor" stroke="none"/><path d="M19.5 3.5l1 1.8M21.2 7.2l1.3.3" stroke-width="1.6"/></svg></div><h3>פקחים בשטח? הקהילה מעדכנת</h3><p>ראיתם? לחיצה אחת והם על המפה, וכל מי שבסביבה מקבל באנר עם הרחוב והשעה. מי שעובר אחריכם מאשר שהם עדיין שם, או מסמן שכבר לא.</p><div class="shot"><div class="phone" style="--pw:250px"><img src="/img/insp-70.png" alt="מצב רכיבה: באנר פקחים בשטח, 70 מטר" width="640" height="1391" loading="lazy" decoding="async"></div></div></article>
+<article class="card" data-reveal style="--d:0.2s"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="8.5" y="3.5" width="9.5" height="6" rx="1.8"/><circle cx="11.6" cy="6.5" r="1.4" fill="currentColor"/><path d="M15.5 6.5h1.4"/><path d="M18 9.5v11"/><path d="M15 20.5h6"/><path d="M6.8 11.8a4.6 4.6 0 0 0 0 5.4"/><path d="M4 9.6a8 8 0 0 0 0 9.8"/><path d="M2.5 20.5h9" stroke-dasharray="2 2.6"/></svg></div><h3>מצלמות על המפה</h3><p>מצלמות האכיפה לקורקינטים מסומנות במפה, ובדרך תקבלו צליל ורטט לפני שאתם מגיעים אליהן.</p><div class="shot"><div class="phone" style="--pw:250px"><img src="/img/alert-70.png" alt="מצב רכיבה: כרטיס התראה אדום, 70 מטר למצלמה" width="640" height="1391" loading="lazy" decoding="async"></div></div></article>
 </div>
 </div>
 </section>
@@ -178,10 +182,24 @@ main.landing{max-width:none;padding:0;margin:0}
 <h2 id="h-how" data-reveal>איך זה עובד</h2>
 <p class="lead" data-reveal style="--d:.1s">שלושה צעדים, ומשם הטלפון עושה את השאר.</p>
 <ol class="steps">
-<li data-reveal style="--d:.1s"><span class="num" aria-hidden="true">01</span><h3>נכנסים עם Apple או Google</h3><p>הכניסה שומרת על אמינות הדיווחים. נשמרים רק מזהה החשבון, והמייל אם בחרתם לשתף אותו.</p></li>
-<li data-reveal style="--d:.25s"><span class="num" aria-hidden="true">02</span><h3>מתחילים רכיבה, הטלפון על המעמד</h3><p>בוחרים יעד או פשוט רוכבים. המפה עוקבת אחריכם והמסך נשאר דלוק.</p></li>
-<li data-reveal style="--d:.4s"><span class="num" aria-hidden="true">03</span><h3>שומעים התראה 150 מטר לפני המצלמה</h3><p>ממשיכים לרכוב כחוק: בשביל, עם קסדה. ראיתם פקחים? מאשרים דיווח קיים או פותחים דיווח חדש.</p></li>
+<li data-reveal style="--d:.1s"><span class="num" aria-hidden="true">01</span><h3>נכנסים לאפליקציה</h3><p>מתחברים פעם אחת, כדי שהדיווחים יהיו אמינים. מהחשבון נשמרים רק המזהה, והמייל אם בחרתם לשתף אותו.</p></li>
+<li data-reveal style="--d:.25s"><span class="num" aria-hidden="true">02</span><h3>מתחילים רכיבה</h3><p>בוחרים יעד או פשוט רוכבים. המפה עוקבת אחריכם והמסך נשאר דלוק.</p></li>
+<li data-reveal style="--d:.4s"><span class="num" aria-hidden="true">03</span><h3>נהנים מהדרך</h3><p>האפליקציה מדברת, הקהילה מעדכנת, ואתם רוכבים.</p></li>
 </ol>
+</div>
+</section>
+
+<section class="rules" aria-labelledby="h-rules">
+<div class="wrap">
+<h2 id="h-rules" data-reveal>לפני שיוצאים לדרך</h2>
+<div class="list" data-reveal style="--d:.1s">
+<div class="rule"><div><h3>חובשים קסדה</h3><p>גם בנסיעה קצרה</p></div><span class="fine">1,000 ₪</span></div>
+<div class="rule"><div><h3>לא על המדרכה</h3><p>כביש או שביל אופניים</p></div><span class="fine">250 ₪</span></div>
+<div class="rule"><div><h3>בלי נוסע נוסף</h3><p>רוכב אחד על הקורקינט</p></div><span class="fine">250 ₪</span></div>
+<div class="rule"><div><h3>לוחית זיהוי</h3><p>מותקנת, גלויה ולא מקופלת</p></div><span class="fine">750 ₪</span></div>
+</div>
+<p class="after" data-reveal style="--d:.2s">את העבירות האלה אוכפים פקחים ומצלמות. ב-2025 חולקו בתל אביב יותר מ-55 אלף דוחות לרוכבי קורקינט ואופניים חשמליים.</p>
+<p class="fineprint" data-reveal style="--d:.25s">הקנסות לפי דיווחים בתקשורת, נכון לאוקטובר 2026.</p>
 </div>
 </section>
 
@@ -203,21 +221,15 @@ main.landing{max-width:none;padding:0;margin:0}
 <details><summary>כמה זה עולה?</summary><p>בגישה המוקדמת האפליקציה חינמית. בהמשך ייתכנו שינויים, ונעדכן מראש.</p></details>
 <details><summary>יש גרסה לאנדרואיד?</summary><p>עדיין לא. מתחילים ב-iPhone, וגרסת אנדרואיד תגיע בהמשך.</p></details>
 <details><summary>האפליקציה עובדת מחוץ לתל אביב?</summary><p>בשלב זה רק בתל אביב-יפו.</p></details>
-<details><summary>האפליקציה עוזרת להתחמק מאכיפה?</summary><p>לא. ההתראה מזכירה לרכוב כחוק: עם קסדה, בשביל ולא על המדרכה.</p></details>
-<details><summary>מאיפה המידע על המצלמות?</summary><p>ממקורות פומביים. המידע אינו רשמי ועלול להיות חלקי. מצאתם מצלמה חסרה או במקום הלא נכון? כתבו לנו: <a href="mailto:support@scootscout.com">support@scootscout.com</a></p></details>
-<details><summary>ומה עם הפרטיות?</summary><p>המסלול שלכם לא נשמר אצלנו, אלא אם הפעלתם גיבוי רכיבות בהגדרות. חוץ מזה, השרתים שלנו מקבלים מיקום רק כשאתם מדווחים על פקחים. מהחשבון נשמרים רק מזהה החשבון, והמייל אם בחרתם לשתף אותו. <a href="/privacy">מדיניות פרטיות</a> · <a href="/terms">תנאי שימוש</a></p></details>
+<details><summary>האפליקציה עוזרת להתחמק מאכיפה?</summary><p>לא. היא עוזרת לדעת מה קורה בדרך, כדי לרכוב לפי החוק.</p></details>
+<details><summary>מאיפה המידע?</summary><p>המצלמות ממקורות פומביים, והפקחים מדיווחים של רוכבים. המידע אינו רשמי ועלול להיות חלקי. מצאתם טעות? כתבו לנו: <a href="mailto:support@scootscout.com">support@scootscout.com</a></p></details>
+<details><summary>ומה עם הפרטיות?</summary><p>המסלול שלכם לא נשמר אצלנו, אלא אם הפעלתם גיבוי רכיבות בהגדרות. חוץ מזה, השרתים שלנו מקבלים מיקום רק כשאתם מדווחים על פקחים. <a href="/privacy">מדיניות פרטיות</a> · <a href="/terms">תנאי שימוש</a></p></details>
 </div>
-</div>
-</section>
-
-<section class="trust" aria-label="הבהרה">
-<div class="wrap">
-<p class="note" data-reveal>המידע על המצלמות נאסף ממקורות פומביים, אינו רשמי ועלול להיות חלקי. ScootScout אינה מחליפה את חוקי התנועה. אתם אחראים לרכיבה בטוחה ולחבישת קסדה.</p>
 </div>
 </section>
 
 <section class="band" aria-labelledby="h-cta">
-<div class="box" data-reveal><h2 id="h-cta">האפליקציה בגישה מוקדמת. רוצים לנסות ראשונים?</h2><a class="cta" href="/early-access">לגישה מוקדמת</a><p class="under">חינם בגישה המוקדמת · כרגע ל-iPhone, ובהמשך גם לאנדרואיד</p></div>
+<div class="box" data-reveal><h2 id="h-cta">רוצים לרכוב עם ScootScout לפני כולם?</h2><a class="cta" href="/early-access">הצטרפו לגישה המוקדמת</a><p class="under">חינם בגישה המוקדמת · כרגע ל-iPhone, ובהמשך גם לאנדרואיד</p></div>
 </section>
 </main>
 <script>
@@ -233,6 +245,6 @@ var bg=d.querySelector(".hero .bg");
 if(bg&&!rm){var tick=false;addEventListener("scroll",function(){if(tick)return;tick=true;requestAnimationFrame(function(){var y=Math.min(scrollY,900);bg.style.translate="0 "+(y*0.18)+"px";tick=false})},{passive:true})}
 })();
 </script>
-<footer><nav aria-label="קישורים"><a href="/early-access">גישה מוקדמת</a><a href="/support">תמיכה</a><a href="/privacy">מדיניות פרטיות</a><a href="/terms">תנאי שימוש</a></nav><span class="legal">© 2026 ScootScout · scootscout.com</span><span class="legal">ScootScout אינה קשורה לעיריית תל אביב-יפו או למשטרת ישראל.</span></footer>
+<footer><nav aria-label="קישורים"><a href="/early-access">גישה מוקדמת</a><a href="/support">תמיכה</a><a href="/privacy">מדיניות פרטיות</a><a href="/terms">תנאי שימוש</a></nav><span class="legal">© 2026 ScootScout · scootscout.com</span><span class="legal">המידע על פקחים ומצלמות מגיע מדיווחי רוכבים וממקורות פומביים, אינו רשמי ואינו מלא. קסדה ושיקול דעת, עליכם.</span><span class="legal">ScootScout אינה קשורה לעיריית תל אביב-יפו או למשטרת ישראל.</span></footer>
 </body>
 </html>

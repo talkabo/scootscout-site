@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>גישה מוקדמת · ScootScout</title>
-<meta name="description" content="הירשמו לגישה מוקדמת ל-ScootScout, המפה של רוכבי הקורקינט בתל אביב, וקבלו במייל קישור להתקנה דרך TestFlight.">
+<meta name="description" content="הירשמו לגישה מוקדמת ל-ScootScout, האפליקציה של רוכבי הקורקינט בתל אביב, וקבלו במייל קישור להתקנה דרך TestFlight.">
 <meta name="theme-color" content="#12161C" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 <link rel="icon" href="/favicon.png">
@@ -72,14 +72,14 @@ main.early{max-width:1100px;padding:40px 16px 72px}
 <div>
 <p class="eyebrow" style="color:var(--accent);font-weight:700;font-size:14px;margin:0 0 12px">גישה מוקדמת · חינם</p>
 <h1>נסו ראשונים. <em>בחינם.</em></h1>
-<p class="lead">ScootScout עדיין לא ב-App Store. נרשמים כאן ומקבלים במייל קישור להתקנה דרך TestFlight של Apple.</p>
+<p class="lead"><bdi>ScootScout</bdi> עדיין לא ב-<bdi>App Store</bdi>. נרשמים כאן ומקבלים במייל קישור להתקנה דרך TestFlight של Apple.</p>
 <ul class="perks">
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>התראה בקול וברטט 150 מטר לפני מצלמת אכיפה לקורקינטים</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>ניווט קולי בעברית בשבילי אופניים</span></li>
 <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>פקחים בשטח, לפי דיווחי רוכבים</span></li>
-<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>ניווט בשבילי אופניים</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>התראה בקול וברטט <bdi>150</bdi> מטר לפני מצלמת אכיפה לקורקינטים</span></li>
 <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>מה שתספרו לנו ישפיע על הגרסה הבאה</span></li>
 </ul>
-<p class="small">בשלב הזה נדרשים iPhone עם iOS 17 ומעלה ואפליקציית TestFlight (חינם ב-App Store). גרסת אנדרואיד תגיע בהמשך.</p>
+<p class="small">בשלב הזה נדרשים <bdi>iPhone</bdi> עם <bdi>iOS 17</bdi> ומעלה ואפליקציית <bdi>TestFlight</bdi> (חינם ב-<bdi>App Store</bdi>). גרסת אנדרואיד תגיע בהמשך.</p>
 </div>
 <div class="form" id="form">
 <form id="early" novalidate>
@@ -89,8 +89,8 @@ main.early{max-width:1100px;padding:40px 16px 72px}
 <label class="field"><span>מייל</span><input name="email" type="email" autocomplete="email" inputmode="email" required maxlength="254" placeholder="dana@example.com" dir="ltr" style="text-align:right"><em class="err">כתובת המייל אינה תקינה.</em></label>
 <label class="hp" aria-hidden="true">אתר<input name="website" type="text" tabindex="-1" autocomplete="off"></label>
 <label class="consent"><input name="consent" type="checkbox" required><span>קראתי את <a href="/privacy">מדיניות הפרטיות</a>. אפשר לשלוח לי מייל אחד עם קישור ההתקנה.</span></label>
+<label class="consent"><input name="updates" type="checkbox"><span>אשמח לקבל עדכון כשהאפליקציה תעלה ל-<bdi>App Store</bdi></span></label>
 <button class="cta" type="submit">שלחו לי את הקישור</button>
-<p class="small" style="text-align:center;margin:12px 0 0">כרגע ל-iPhone עם iOS 17 ומעלה. אנדרואיד בהמשך.</p>
 <p class="status" role="alert" aria-live="polite"></p>
 </form>
 <div class="done">
@@ -115,7 +115,7 @@ if(!f.elements.consent.checked){st.className="status err";st.textContent="צרי
 if(!ok){var first=f.querySelector('[aria-invalid="true"]');if(first)first.focus();return}
 btn.disabled=true;var label=btn.textContent;btn.textContent="שולחים…";
 try{
-var r=await fetch("https://scootscout-api.replit.app/early-access",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:f.elements.name.value.trim(),email:f.elements.email.value.trim(),consent:true,website:f.elements.website.value||undefined,source:"site"})});
+var r=await fetch("https://scootscout-api.replit.app/early-access",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:f.elements.name.value.trim(),email:f.elements.email.value.trim(),consent:true,updates:f.elements.updates.checked,website:f.elements.website.value||undefined,source:"site"})});
 var data=null;try{data=await r.json()}catch(_){}
 if(r.status===429){throw new Error("יותר מדי ניסיונות מהרשת הזו. נסו שוב בעוד שעה.")}
 if(!r.ok||!data||!data.ok){throw new Error((data&&data.error&&data.error.message)||"משהו השתבש בדרך. נסו שוב בעוד רגע.")}
@@ -125,6 +125,6 @@ box.classList.add("sent");box.scrollIntoView({behavior:"smooth",block:"center"})
 });
 })();
 </script>
-<footer><nav aria-label="קישורים"><a href="/early-access">גישה מוקדמת</a><a href="/support">תמיכה</a><a href="/privacy">מדיניות פרטיות</a><a href="/terms">תנאי שימוש</a></nav><span class="legal">© 2026 ScootScout · scootscout.com</span><span class="legal">המידע על פקחים ומצלמות מגיע מדיווחי רוכבים וממקורות פומביים, אינו רשמי ואינו מלא. קסדה ושיקול דעת, עליכם.</span><span class="legal">ScootScout אינה קשורה לעיריית תל אביב-יפו או למשטרת ישראל.</span></footer>
+<footer><nav aria-label="קישורים"><a href="/early-access">גישה מוקדמת</a><a href="/support">תמיכה</a><a href="/privacy">מדיניות פרטיות</a><a href="/terms">תנאי שימוש</a></nav><span class="legal">© 2026 ScootScout · scootscout.com</span><span class="legal">המידע על פקחים ומצלמות מגיע מדיווחי רוכבים וממקורות פומביים, אינו רשמי ואינו מלא. קסדה (חובה) ושיקול דעת – עליכם.</span><span class="legal">ScootScout אינה קשורה לעיריית תל אביב-יפו או למשטרת ישראל.</span></footer>
 </body>
 </html>

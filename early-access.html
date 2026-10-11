@@ -9,9 +9,16 @@
 <meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
 <link rel="icon" href="/favicon.png">
 <link rel="apple-touch-icon" href="/favicon.png">
+<link rel="canonical" href="https://scootscout.com/early-access">
 <meta property="og:title" content="ScootScout · גישה מוקדמת">
 <meta property="og:description" content="נסו ראשונים: קישור להתקנה דרך TestFlight, ישר למייל.">
-<meta property="og:image" content="https://scootscout.com/img/hero.jpg">
+<meta property="og:url" content="https://scootscout.com/early-access">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://scootscout.com/img/og.jpg?v=90ae4ff3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ScootScout · רוכבים בראש שקט">
+<meta name="twitter:image" content="https://scootscout.com/img/og.jpg?v=90ae4ff3">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&family=Unbounded:wght@800&display=swap" rel="stylesheet">
@@ -66,7 +73,7 @@ main.early{max-width:1100px;padding:40px 16px 72px}
 </head>
 <body>
 <header><div class="top"><a href="/" class="logo" aria-label="ScootScout"><svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="22.37" fill="#FF6A13"/><path d="M68 26 C58 17 32 19 32 35 C32 50 68 47 68 63 C68 79 42 82 31 73" fill="none" stroke="#12161C" stroke-width="15" stroke-linecap="round"/><path d="M68 26 C58 17 32 19 32 35 C32 50 68 47 68 63 C68 79 42 82 31 73" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="4.5 5"/><circle cx="68" cy="26" r="7.5" fill="#FFFFFF"/><circle cx="68" cy="26" r="3.2" fill="#12161C"/></svg><b>Scoot<span>Scout</span></b></a>
-<nav aria-label="ניווט ראשי"><a href="/early-access">גישה מוקדמת</a><a href="/support">תמיכה</a><a href="/privacy">פרטיות</a><a href="/terms">תנאים</a></nav><a class="cta small" href="/early-access">גישה מוקדמת</a></div></header>
+<nav aria-label="ניווט ראשי"><a href="/#how">איך זה עובד</a><a href="/#faq">שאלות נפוצות</a><a href="/support">תמיכה</a></nav><a class="cta small" href="/early-access">גישה מוקדמת</a></div></header>
 <main class="early">
 <div class="grid">
 <div>
@@ -81,6 +88,7 @@ main.early{max-width:1100px;padding:40px 16px 72px}
 </ul>
 <p class="small">בשלב הזה נדרשים <bdi>iPhone</bdi> עם <bdi>iOS 17</bdi> ומעלה ואפליקציית <bdi>TestFlight</bdi> (חינם ב-<bdi>App Store</bdi>). גרסת אנדרואיד תגיע בהמשך.</p>
 </div>
+
 <div class="form" id="form">
 <form id="early" novalidate>
 <h2>השאירו פרטים</h2>
@@ -100,6 +108,7 @@ main.early{max-width:1100px;padding:40px 16px 72px}
 <p class="small">לא הגיע תוך כמה דקות? כתבו לנו: <a href="mailto:support@scootscout.com">support@scootscout.com</a></p>
 </div>
 </div>
+
 </div>
 </main>
 <script>
@@ -115,16 +124,16 @@ if(!f.elements.consent.checked){st.className="status err";st.textContent="צרי
 if(!ok){var first=f.querySelector('[aria-invalid="true"]');if(first)first.focus();return}
 btn.disabled=true;var label=btn.textContent;btn.textContent="שולחים…";
 try{
-var r=await fetch("https://scootscout-api.replit.app/early-access",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:f.elements.name.value.trim(),email:f.elements.email.value.trim(),consent:true,updates:f.elements.updates.checked,website:f.elements.website.value||undefined,source:"site"})});
+var r=await fetch("https://scootscout-api.replit.app/early-access",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:f.elements.name.value.trim(),email:f.elements.email.value.trim(),consent:true,updates:f.elements.updates.checked,website:f.elements.website.value||undefined,source:(location.pathname==="/"||location.pathname==="/index.html")?"home":"site"})});
 var data=null;try{data=await r.json()}catch(_){}
 if(r.status===429){throw new Error("יותר מדי ניסיונות מהרשת הזו. נסו שוב בעוד שעה.")}
 if(!r.ok||!data||!data.ok){throw new Error((data&&data.error&&data.error.message)||"משהו השתבש בדרך. נסו שוב בעוד רגע.")}
-if(!data.emailed){document.getElementById("done-title").textContent="נרשמתם.";document.getElementById("done-text").textContent="נשלח לכם את קישור ההתקנה כשייפתח הסבב הבא. מייל אחד, בלי ספאם."}
+if(window.plausible)plausible("signup");if(window.zaraz)zaraz.track("signup");if(!data.emailed){document.getElementById("done-title").textContent="נרשמתם.";document.getElementById("done-text").textContent="נשלח לכם את קישור ההתקנה כשייפתח הסבב הבא. מייל אחד, בלי ספאם."}
 box.classList.add("sent");box.scrollIntoView({behavior:"smooth",block:"center"});
 }catch(err){st.className="status err";st.textContent=(err instanceof TypeError)?"לא הצלחנו להגיע לשרת. בדקו את החיבור ונסו שוב, או כתבו ל-support@scootscout.com.":(err&&err.message?err.message:"משהו השתבש. נסו שוב.");btn.disabled=false;btn.textContent=label}
 });
 })();
 </script>
-<footer><nav aria-label="קישורים"><a href="/early-access">גישה מוקדמת</a><a href="/support">תמיכה</a><a href="/privacy">מדיניות פרטיות</a><a href="/terms">תנאי שימוש</a></nav><span class="legal">© 2026 ScootScout · scootscout.com</span><span class="legal">המידע על פקחים ומצלמות מגיע מדיווחי רוכבים וממקורות פומביים, אינו רשמי ואינו מלא. קסדה (חובה) ושיקול דעת – עליכם.</span><span class="legal">ScootScout אינה קשורה לעיריית תל אביב-יפו או למשטרת ישראל.</span></footer>
+<footer><nav aria-label="קישורים"><a href="/early-access">גישה מוקדמת</a><a href="/cameras">מצלמות אכיפה בתל אביב</a><a href="/support">תמיכה</a><a href="/privacy">מדיניות פרטיות</a><a href="/terms">תנאי שימוש</a></nav><span class="legal">© 2026 ScootScout · scootscout.com</span><span class="legal">המידע על פקחים ומצלמות מגיע מדיווחי רוכבים וממקורות פומביים, אינו רשמי ואינו מלא. קסדה (חובה) ושיקול דעת – עליכם.</span><span class="legal">ScootScout אינה קשורה לעיריית תל אביב-יפו או למשטרת ישראל.</span></footer>
 </body>
 </html>

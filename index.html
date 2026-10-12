@@ -327,7 +327,7 @@ if(!f.elements.consent.checked){st.className="status err";st.textContent="צרי
 if(!ok){var first=f.querySelector('[aria-invalid="true"]');if(first)first.focus();return}
 btn.disabled=true;var label=btn.textContent;btn.textContent="שולחים…";
 try{
-var r=await fetch("https://scootscout-api.replit.app/early-access",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:f.elements.name.value.trim(),email:f.elements.email.value.trim(),consent:true,updates:f.elements.updates.checked,website:f.elements.website.value||undefined,source:(location.pathname==="/"||location.pathname==="/index.html")?"home":"site"})});
+var r=await fetch("https://scootscout-api.replit.app/early-access",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:f.elements.name.value.trim(),email:f.elements.email.value.trim(),consent:true,website:f.elements.website.value||undefined,source:(location.pathname==="/"||location.pathname==="/index.html")?"home":"site"})});
 var data=null;try{data=await r.json()}catch(_){}
 if(r.status===429){throw new Error("יותר מדי ניסיונות מהרשת הזו. נסו שוב בעוד שעה.")}
 if(!r.ok||!data||!data.ok){throw new Error((data&&data.error&&data.error.message)||"משהו השתבש בדרך. נסו שוב בעוד רגע.")}

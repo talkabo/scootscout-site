@@ -19,6 +19,15 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="ScootScout · רוכבים בראש שקט">
 <meta name="twitter:image" content="https://scootscout.com/img/og.jpg?v=90ae4ff3">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SLQS6JVE8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1SLQS6JVE8');
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&family=Unbounded:wght@800&display=swap" rel="stylesheet">
@@ -128,7 +137,7 @@ var r=await fetch("https://scootscout-api.replit.app/early-access",{method:"POST
 var data=null;try{data=await r.json()}catch(_){}
 if(r.status===429){throw new Error("יותר מדי ניסיונות מהרשת הזו. נסו שוב בעוד שעה.")}
 if(!r.ok||!data||!data.ok){throw new Error((data&&data.error&&data.error.message)||"משהו השתבש בדרך. נסו שוב בעוד רגע.")}
-if(window.plausible)plausible("signup");if(window.zaraz)zaraz.track("signup");if(!data.emailed){document.getElementById("done-title").textContent="נרשמתם.";document.getElementById("done-text").textContent="נשלח לכם את קישור ההתקנה כשייפתח הסבב הבא. מייל אחד, בלי ספאם."}
+if(window.plausible)plausible("signup");if(window.zaraz)zaraz.track("signup");if(window.gtag)gtag("event","sign_up",{method:"early_access"});if(!data.emailed){document.getElementById("done-title").textContent="נרשמתם.";document.getElementById("done-text").textContent="נשלח לכם את קישור ההתקנה כשייפתח הסבב הבא. מייל אחד, בלי ספאם."}
 box.classList.add("sent");box.scrollIntoView({behavior:"smooth",block:"center"});
 }catch(err){st.className="status err";st.textContent=(err instanceof TypeError)?"לא הצלחנו להגיע לשרת. בדקו את החיבור ונסו שוב, או כתבו ל-support@scootscout.com.":(err&&err.message?err.message:"משהו השתבש. נסו שוב.");btn.disabled=false;btn.textContent=label}
 });

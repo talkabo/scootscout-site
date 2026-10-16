@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>הוראות התקנה · ScootScout</title>
+<meta name="description" content="איך מתקינים את ScootScout: באייפון דרך TestFlight, ובאנדרואיד דרך בדיקה סגורה ב-Google Play. כל השלבים והקישורים.">
+<meta name="theme-color" content="#12161C" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F1EA" media="(prefers-color-scheme: light)">
+<link rel="icon" href="/favicon.png">
+<link rel="apple-touch-icon" href="/favicon.png">
+<link rel="canonical" href="https://scootscout.com/install">
+<meta property="og:title" content="ScootScout · הוראות התקנה">
+<meta property="og:description" content="אייפון או אנדרואיד: שלושה שלבים, כל הקישורים.">
+<meta property="og:url" content="https://scootscout.com/install">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:image" content="https://scootscout.com/img/og.jpg?v=90ae4ff3">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="ScootScout · רוכבים בראש שקט">
+<meta name="twitter:image" content="https://scootscout.com/img/og.jpg?v=90ae4ff3">
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1SLQS6JVE8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1SLQS6JVE8');
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;900&family=Unbounded:wght@800&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark light;--bg:#12161C;--surface:#1A1F27;--text:#EEF3EF;--muted:#9FB3A8;--accent:#FF8A33;--on-accent:#12161C;--green:#4ADE80;--red:#FF4D4F;--insp:#B91C1C;--border:#313947;--link:#FF8A33;--ring:#FF8A33}
+@media (prefers-color-scheme: light){:root{--bg:#F4F1EA;--surface:#FFFFFF;--text:#12161C;--muted:#5B6470;--accent:#FF7A1A;--on-accent:#12161C;--green:#22C55E;--red:#E5383B;--insp:#7F1D1D;--border:#E3DED3;--link:#A8480A;--ring:#FF7A1A}}
+*{box-sizing:border-box}html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Heebo,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.65;overflow-x:hidden}
+img{max-width:100%}
+:focus-visible{outline:3px solid var(--ring);outline-offset:3px;border-radius:6px}
+header{position:sticky;top:0;z-index:50;padding:14px 16px;border-bottom:1px solid transparent;background:color-mix(in srgb,var(--bg) 72%,transparent);-webkit-backdrop-filter:blur(14px) saturate(1.3);backdrop-filter:blur(14px) saturate(1.3);transition:border-color .3s,background .3s}header.scrolled{border-bottom-color:var(--border);background:color-mix(in srgb,var(--bg) 86%,transparent)}header .top{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:12px 20px;flex-wrap:wrap}
+header .logo{display:inline-flex;align-items:center;gap:10px;direction:ltr;color:var(--text);text-decoration:none;font-family:Unbounded,Heebo,sans-serif;font-weight:800;font-size:20px;letter-spacing:-.02em}
+header .logo svg{width:30px;height:30px;flex:none}header .logo b{font-weight:inherit}header .logo span{color:var(--accent)}
+header nav{display:flex;gap:4px 18px;flex-wrap:wrap;margin-inline-start:auto}header nav a{color:var(--muted);font-size:15px;text-decoration:none;padding:4px 0;transition:color .2s}header nav a:hover{color:var(--text)}
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:var(--accent);color:var(--on-accent);font-weight:700;padding:12px 22px;border-radius:14px;text-decoration:none;line-height:1.2;cursor:pointer;transition:filter .2s,transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s}.cta:hover{filter:brightness(1.07);transform:translateY(-2px)}.cta:active{transform:translateY(0) scale(.98)}
+.cta.small{padding:9px 16px;font-size:14px;border-radius:12px}
+@media (max-width:767px){header .cta.small{display:none}}
+main{max-width:760px;margin:0 auto;padding:24px 16px 64px}h1{font-size:32px;line-height:1.2;margin:8px 0 16px}h2{font-size:22px;margin:32px 0 8px}
+p,li{font-size:16px}a{color:var(--link)}table{border-collapse:collapse;width:100%;font-size:14px;margin:12px 0;display:block;overflow-x:auto}
+th,td{border:1px solid var(--border);padding:8px;text-align:right;vertical-align:top}th{background:var(--surface)}
+footer{color:var(--muted);font-size:13px;padding:28px 16px;border-top:1px solid var(--border);text-align:center}footer nav{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-bottom:10px}footer nav a{color:var(--muted);text-decoration:none}footer nav a:hover{color:var(--text)}footer .legal{display:block;margin-top:4px}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+
+main.install{max-width:1100px;padding:40px 16px 72px}
+.install h1{font-size:clamp(32px,5vw,52px);line-height:1.08;font-weight:900;letter-spacing:-.015em;margin:0 0 12px}
+.install .lead{color:var(--muted);font-size:18px;margin:0 0 28px}
+.install .jump{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 32px}
+.install .cards{display:grid;gap:24px}@media (min-width:900px){.install .cards{grid-template-columns:1fr 1fr}}
+.install .card{background:var(--surface);border:1px solid var(--border);border-radius:28px;padding:26px 22px;scroll-margin-top:90px}
+.install .card h2{margin:0 0 4px;font-size:26px}.install .card .req{color:var(--muted);font-size:14px;margin:0 0 18px}
+.install ol{list-style:none;padding:0;margin:0;display:grid;gap:18px;counter-reset:s}
+.install ol li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;gap:12px;align-items:start}
+.install ol li::before{content:counter(s);width:36px;height:36px;border-radius:50%;background:var(--accent);color:var(--on-accent);font-weight:900;display:grid;place-items:center}
+.install .step b{display:block;font-size:17px}.install .step p{margin:2px 0 8px;color:var(--muted);font-size:15px}
+.install .step .row{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.install .step .cta{padding:10px 16px;font-size:15px;border-radius:12px}
+.install .qr{width:96px;height:96px;border-radius:10px;background:#fff;padding:4px;display:none}@media (min-width:900px){.install .qr{display:block}}
+.install .note{margin:18px 0 0;padding:14px 16px;border-radius:14px;background:color-mix(in srgb,var(--accent) 12%,transparent);font-size:14px;line-height:1.6}
+.install .after{margin-top:32px;color:var(--muted);font-size:15px}
+</style>
+</head>
+<body>
+<header><div class="top"><a href="/" class="logo" aria-label="ScootScout"><svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="22.37" fill="#FF6A13"/><path d="M68 26 C58 17 32 19 32 35 C32 50 68 47 68 63 C68 79 42 82 31 73" fill="none" stroke="#12161C" stroke-width="15" stroke-linecap="round"/><path d="M68 26 C58 17 32 19 32 35 C32 50 68 47 68 63 C68 79 42 82 31 73" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="4.5 5"/><circle cx="68" cy="26" r="7.5" fill="#FFFFFF"/><circle cx="68" cy="26" r="3.2" fill="#12161C"/></svg><b>Scoot<span>Scout</span></b></a>
+<nav aria-label="ניווט ראשי"><a href="/#how">איך זה עובד</a><a href="/#faq">שאלות נפוצות</a><a href="/install">התקנה</a><a href="/support">תמיכה</a></nav><a class="cta small" href="/install">גישה מוקדמת</a></div></header>
+<main class="install">
+<p class="eyebrow" style="color:var(--accent);font-weight:700;font-size:14px;margin:0 0 12px">גישה מוקדמת · חינם</p>
+<h1>מתקינים את <bdi>ScootScout</bdi></h1>
+<p class="lead">בוחרים את הטלפון שלכם ועוברים על השלבים מהטלפון עצמו. מגיעים מהמחשב? סורקים את הקודים עם מצלמת הטלפון.</p>
+<div class="jump"><a class="cta" href="#iphone">אייפון</a><a class="cta" href="#android">אנדרואיד</a></div>
+<div class="cards">
+<section class="card" id="iphone" aria-labelledby="h-ios">
+<h2 id="h-ios"><bdi>iPhone</bdi></h2>
+<p class="req">נדרש <bdi>iOS 17</bdi> ומעלה. ההתקנה דרך <bdi>TestFlight</bdi>, האפליקציה של Apple לגרסאות מוקדמות.</p>
+<ol>
+<li><div class="step"><b>מורידים את TestFlight</b><p>חינם, בחנות של Apple.</p><div class="row"><a class="cta" href="https://apps.apple.com/app/testflight/id899247664" target="_blank" rel="noopener">להורדת TestFlight</a><img class="qr" src="/img/qr-ios-testflight-app.png?v=3b399989" alt="QR: להורדת TestFlight" width="96" height="96" loading="lazy"></div></div></li>
+<li><div class="step"><b>פותחים את קישור ההזמנה</b><p>מהאייפון. TestFlight ייפתח עם ScootScout.</p><div class="row"><a class="cta" href="https://testflight.apple.com/join/t8RTgxFu" target="_blank" rel="noopener">קישור ההזמנה</a><img class="qr" src="/img/qr-ios-join.png?v=8afd18f8" alt="QR: קישור ההזמנה" width="96" height="96" loading="lazy"></div></div></li>
+<li><div class="step"><b>לוחצים Install</b><p>בתוך TestFlight, ליד ScootScout. וזהו. עדכונים יגיעו דרך אפליקציית TestFlight.</p></div></li>
+</ol>
+</section>
+<section class="card" id="android" aria-labelledby="h-android">
+<h2 id="h-android">אנדרואיד</h2>
+<p class="req">נדרש טלפון אנדרואיד עם חשבון <bdi>Google</bdi>. ההתקנה דרך בדיקה סגורה בחנות <bdi>Google Play</bdi>.</p>
+<ol>
+<li><div class="step"><b>מצטרפים לקבוצת הבודקים</b><p>לוחצים Join group. זה מה שפותח לכם את הגישה.</p><div class="row"><a class="cta" href="https://groups.google.com/g/scootscout-testers" target="_blank" rel="noopener">הצטרפות לקבוצה</a><img class="qr" src="/img/qr-android-group.png?v=6432cdef" alt="QR: הצטרפות לקבוצה" width="96" height="96" loading="lazy"></div></div></li>
+<li><div class="step"><b>מאשרים השתתפות בבדיקה</b><p>לוחצים Become a tester.</p><div class="row"><a class="cta" href="https://play.google.com/apps/testing/com.scootscout.app" target="_blank" rel="noopener">אישור השתתפות</a><img class="qr" src="/img/qr-android-optin.png?v=646386a5" alt="QR: אישור השתתפות" width="96" height="96" loading="lazy"></div></div></li>
+<li><div class="step"><b>מורידים מחנות Google Play</b><p>מתקינים כמו כל אפליקציה. עדכונים יגיעו אוטומטית.</p><div class="row"><a class="cta" href="https://play.google.com/store/apps/details?id=com.scootscout.app" target="_blank" rel="noopener">הורדה מחנות Google Play</a><img class="qr" src="/img/qr-android-store.png?v=e74bf1a0" alt="QR: הורדה מחנות Google Play" width="96" height="96" loading="lazy"></div></div></li>
+</ol>
+<p class="note">חשוב: את שלושת השלבים עושים <b>מהטלפון ועם אותו חשבון Google</b> שמחובר אליו. התקנתם בעבר קובץ APK ששלחנו? מוחקים אותו קודם. ונשמח אם תשאירו את האפליקציה מותקנת לפחות שבועיים.</p>
+</section>
+</div>
+<p class="after">משהו לא עובד? <a href="mailto:support@scootscout.com">support@scootscout.com</a></p>
+</main>
+<footer><nav aria-label="קישורים"><a href="/install">גישה מוקדמת והתקנה</a><a href="/support">תמיכה</a><a href="/privacy">מדיניות פרטיות</a><a href="/terms">תנאי שימוש</a></nav><span class="legal">© 2026 ScootScout · scootscout.com</span><span class="legal">המידע על פקחים ומצלמות מגיע מדיווחי רוכבים וממקורות פומביים, אינו רשמי ואינו מלא. קסדה (חובה) ושיקול דעת – עליכם.</span><span class="legal">ScootScout אינה קשורה לעיריית תל אביב-יפו או למשטרת ישראל.</span></footer>
+</body>
+</html>

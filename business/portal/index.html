@@ -12,7 +12,7 @@
 <link rel="canonical" href="https://scootscout.com/business/portal">
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
-<script async crossorigin="anonymous" data-clerk-publishable-key="pk_live_Y2xlcmsuc2Nvb3RzY291dC5jb20k" src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5.100.0/dist/clerk.browser.js" type="text/javascript"></script><script>
+<script async crossorigin="anonymous" data-clerk-publishable-key="pk_live_Y2xlcmsuc2Nvb3RzY291dC5jb20k" src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@6.37.0/dist/clerk.browser.js" type="text/javascript"></script><script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
 gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});
 (function(){var K='sc_consent',Y=365*864e5;function read(){try{var v=JSON.parse(localStorage.getItem(K)||'null');if(v&&v.at&&Date.now()-Date.parse(v.at)<Y)return v}catch(e){}return null}
@@ -91,7 +91,20 @@ main.portal{max-width:1100px;padding:28px 16px 72px}
 .portal .msg{margin:12px 0 0;padding:12px 14px;border-radius:14px;font-size:14px;display:none}.portal .msg.show{display:block}.portal .msg.err{background:color-mix(in srgb,var(--red) 14%,transparent)}.portal .msg.ok{background:color-mix(in srgb,var(--green) 14%,transparent)}
 .portal .pay{white-space:pre-wrap;background:var(--bg);border:1px solid var(--border);border-radius:14px;padding:14px;font-size:14px}
 .portal .photos{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}.portal .photos .thumb{width:72px;height:72px}
-.portal .signin{max-width:440px;margin:24px auto}.portal .signin .panel{margin-bottom:16px}
+.portal.signing-in .bar,.portal.signing-in .account{display:none}
+.portal .auth{display:grid;gap:28px;align-items:center;margin:12px 0 24px}.portal .auth[hidden]{display:none}
+@media (min-width:900px){.portal .auth{grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:48px;min-height:560px}}
+.portal .kicker{display:inline-flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,transparent);border:1px solid color-mix(in srgb,var(--accent) 30%,transparent);padding:6px 12px;border-radius:999px}
+.portal .kicker .dot{width:8px;height:8px;border-radius:4px;background:var(--accent)}
+.portal .auth h1{font-size:clamp(32px,4.6vw,52px);line-height:1.08;font-weight:900;letter-spacing:-.015em;margin:18px 0 14px}.portal .auth h1 em{font-style:normal;color:var(--accent)}
+.portal .auth .lead{color:var(--muted);font-size:18px;margin:0 0 24px;max-width:520px}
+.portal .perks{list-style:none;padding:0;margin:0 0 24px;display:grid;gap:14px}
+.portal .perks li{display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:1.5}
+.portal .perks .ico{flex:none;width:36px;height:36px;border-radius:12px;display:grid;place-items:center;background:var(--surface);border:1px solid var(--border);color:var(--accent)}.portal .perks svg{width:18px;height:18px}
+.portal .auth .note{color:var(--muted);font-size:14px;border-top:1px solid var(--border);padding-top:16px;margin:0;max-width:520px}
+.portal .auth-card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:28px;padding:28px 22px;box-shadow:0 30px 60px rgba(0,0,0,.28);display:flex;justify-content:center;min-height:420px;align-items:center}
+.portal .auth-card::before{content:"";position:absolute;inset:-1px;border-radius:28px;padding:1px;background:linear-gradient(140deg,color-mix(in srgb,var(--accent) 55%,transparent),transparent 45%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.portal #signin{width:100%;max-width:400px}
 .portal .account{display:flex;align-items:center;gap:6px 14px;flex-wrap:wrap;margin:-10px 0 20px;color:var(--muted);font-size:14px}.portal .account[hidden]{display:none}
 .portal .linkish{background:none;border:0;padding:0;font:inherit;font-size:14px;color:var(--link);text-decoration:underline;cursor:pointer}
 .portal .choice{display:grid;gap:12px}@media (min-width:720px){.portal .choice{grid-template-columns:1fr 1fr}}
@@ -107,7 +120,20 @@ main.portal{max-width:1100px;padding:28px 16px 72px}
 <div class="bar"><h1>פורטל עסקים</h1><span id="biz-status"></span><nav class="tabs" id="tabs" hidden><a href="#overview">סקירה</a><a href="#listings">המודעות שלי</a><a href="#payments">תשלומים</a><a href="#details">פרטי העסק</a></nav></div>
 <div class="account" id="account" hidden><span id="who"></span><button type="button" class="linkish" id="switch">החלפת חשבון</button><button type="button" class="linkish" id="signout">התנתקות</button></div>
 <div id="loading" class="muted">טוען…</div>
-<div id="signin-wrap" class="signin" hidden><div class="panel"><h2>כניסה לפורטל העסקים</h2><p class="sub">נכנסים עם אותו חשבון כמו באפליקציה (Apple או Google). אין עדיין חשבון? הכניסה הראשונה יוצרת אותו, ואחריה ממלאים את פרטי העסק.</p></div><div id="signin"></div></div>
+<div id="signin-wrap" class="auth" hidden>
+<section class="auth-pitch">
+<span class="kicker"><span class="dot"></span>ScootScout לעסקים</span>
+<h1>המרקט של הרוכבים.<br><em>הדוכן של העסק שלך.</em></h1>
+<p class="lead">כל מה שהעסק צריך במרקט, במקום אחד: מודעות, קידומים, תשלומים, והפניות שמגיעות מרוכבים.</p>
+<ul class="perks">
+<li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><path d="M7 7h.01"/></svg></span><span><b>עד 20 מודעות פעילות</b> מול רוכבים שכבר רוכבים, עם תג "עסק מאומת"</span></li>
+<li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></span><span><b>צפיות ופניות</b> לכל מודעה, בזמן אמת</span></li>
+<li><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg></span><span><b>קידום לראש הרשימה</b> בשבוע אחד, כשצריך</span></li>
+</ul>
+<p class="note">נכנסים עם Google, Apple או מייל. עסק חדש? אחרי הכניסה ממלאים את פרטי העסק, ואנחנו מאמתים תוך יום עסקים.</p>
+</section>
+<section class="auth-card"><div id="signin"><p class="muted">טוען את הכניסה…</p></div></section>
+</div>
 <section id="view"></section>
 </main>
 <script>(function(){
@@ -229,12 +255,20 @@ loading.hidden=true;status.innerHTML=statusBadge(biz);showAccount();
 var h=(location.hash||'').slice(1);if(h.indexOf('edit-')===0){renderEditor(h.slice(5));return}if(h==='new'){renderEditor(null);return}route()}
 addEventListener('hashchange',function(){var h=(location.hash||'').slice(1);if(h.indexOf('edit-')===0)renderEditor(h.slice(5));else if(h==='new')renderEditor(null)});
 
-async function start(){try{await window.Clerk.load()}catch(e){loading.textContent='ההתחברות לא נטענה. רעננו את הדף.';return}
+var CLERK_APPEARANCE={
+ variables:{colorPrimary:'#FF8A33',colorPrimaryForeground:'#12161C',colorBackground:'#1A1F27',colorForeground:'#EEF3EF',colorMutedForeground:'#9FB3A8',colorInput:'#12161C',colorInputForeground:'#EEF3EF',colorNeutral:'#EEF3EF',colorDanger:'#FF4D4F',colorBorder:'#313947',borderRadius:'14px',fontFamily:'Heebo, system-ui, sans-serif',fontSize:'15px'},
+ layout:{socialButtonsVariant:'blockButton',socialButtonsPlacement:'top',logoPlacement:'none'},
+ elements:{rootBox:{width:'100%'},cardBox:{width:'100%',boxShadow:'none',border:'0'},card:{background:'transparent',boxShadow:'none',border:'0',padding:'4px'},footer:{background:'transparent'},socialButtonsBlockButton__github:{display:'none'},socialButtonsIconButton__github:{display:'none'},headerTitle:{fontSize:'24px',fontWeight:'800'},formButtonPrimary:{fontWeight:'800',fontSize:'16px',height:'48px'},socialButtonsBlockButton:{height:'48px',fontSize:'15px'}}
+};
+async function clerkLocalization(){try{var m=await import('https://cdn.jsdelivr.net/npm/@clerk/localizations@4.20.0/+esm');var he=m.heIL||{};return Object.assign({},he,{
+ signIn:Object.assign({},he.signIn,{start:Object.assign({},he.signIn&&he.signIn.start,{title:'כניסה לפורטל העסקים',subtitle:'עם החשבון של העסק',actionText:'אין עדיין חשבון?',actionLink:'פתיחת חשבון'})}),
+ signUp:Object.assign({},he.signUp,{start:Object.assign({},he.signUp&&he.signUp.start,{title:'פתיחת חשבון לעסק',subtitle:'אחרי זה ממלאים את פרטי העסק',actionText:'כבר יש חשבון?',actionLink:'כניסה'})})})}catch(e){return undefined}}
+async function start(){var loc=await clerkLocalization();try{await window.Clerk.load({appearance:CLERK_APPEARANCE,localization:loc})}catch(e){loading.textContent='ההתחברות לא נטענה. רעננו את הדף.';return}
 document.getElementById('signout').addEventListener('click',function(e){e.preventDefault();window.Clerk.signOut().then(function(){location.href='/business'})});
 document.getElementById('switch').addEventListener('click',function(e){e.preventDefault();switchAccount()});
 var wrap=document.getElementById('signin-wrap');
-if(!window.Clerk.user){loading.hidden=true;wrap.hidden=false;window.Clerk.mountSignIn(signin,{appearance:{variables:{colorPrimary:'#FF8A33'}},forceRedirectUrl:location.href,signUpForceRedirectUrl:location.href});
-window.Clerk.addListener(function(s){if(s.user&&wrap.hidden===false){wrap.hidden=true;try{window.Clerk.unmountSignIn(signin)}catch(e){}boot()}});return}
+if(!window.Clerk.user){loading.hidden=true;wrap.hidden=false;document.querySelector('main').classList.add('signing-in');signin.innerHTML='';window.Clerk.mountSignIn(signin,{appearance:CLERK_APPEARANCE,forceRedirectUrl:location.href,signUpForceRedirectUrl:location.href});
+window.Clerk.addListener(function(s){if(s.user&&wrap.hidden===false){wrap.hidden=true;document.querySelector('main').classList.remove('signing-in');try{window.Clerk.unmountSignIn(signin)}catch(e){}boot()}});return}
 boot()}
 if(DEMO){document.getElementById('signout').addEventListener('click',function(e){e.preventDefault();location.href='/business'});document.getElementById('switch').addEventListener('click',function(e){e.preventDefault();switchAccount()});var note=document.createElement('p');note.className='muted';note.textContent='תצוגה לדוגמה (demo=1): נתונים מומצאים, בלי כניסה. בפורטל האמיתי נכנסים עם החשבון.';document.querySelector('.bar').after(note);boot()}
 else if(window.Clerk)start();else document.querySelector('script[data-clerk-publishable-key]').addEventListener('load',start);

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>ScootScout · בדרך</title>
+<link rel="icon" href="/favicon.png">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<style>
+:root{color-scheme:dark light;--bg:#12161C;--surface:#1A1F27;--text:#EEF3EF;--muted:#9FB3A8;--accent:#FF8A33;--on-accent:#12161C;--green:#4ADE80;--border:#313947}
+@media (prefers-color-scheme: light){:root{--bg:#F4F1EA;--surface:#FFFFFF;--text:#12161C;--muted:#5B6470;--accent:#FF7A1A;--green:#22C55E;--border:#E3DED3}}
+*{box-sizing:border-box}html,body{margin:0;height:100%;background:var(--bg);color:var(--text);font-family:Heebo,system-ui,-apple-system,"Segoe UI",Arial,sans-serif}
+body{display:flex;flex-direction:column}
+header{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--surface)}
+header img{height:28px}header b{font-size:17px}
+#map{flex:1;min-height:40vh;background:#263040}
+.card{background:var(--surface);border-top:1px solid var(--border);padding:16px 16px 28px;display:grid;gap:8px}
+.card h1{margin:0;font-size:22px}.card p{margin:0;color:var(--muted);line-height:1.5}
+.big{font-size:40px;font-weight:900;line-height:1}
+.row{display:flex;gap:16px;align-items:baseline}
+.ok{color:var(--green)}.pill{display:inline-block;padding:4px 10px;border-radius:12px;background:var(--border);font-size:13px;color:var(--text)}
+.leaflet-container{font:inherit}
+</style>
+</head>
+<body>
+<header><img src="/logo-on-dark.svg" alt="ScootScout"><b>בדרך</b><span class="pill" id="state">טוען…</span></header>
+<div id="map" role="img" aria-label="מפה עם מיקום הרוכב"></div>
+<section class="card" aria-live="polite">
+<h1 id="title">מתחברים לשיתוף…</h1>
+<div class="row"><span class="big" id="eta">–</span><span id="dist"></span></div>
+<p id="sub">הדף מתעדכן כל 10 שניות. רק בזמן הרכיבה הזאת, בהסכמת הרוכב.</p>
+<p id="foot">אין מיקום בדף הזה מלבד של הרוכב ששיתף. ScootScout לא עוקבת אחרי מי שצופה.</p>
+</section>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+(function(){
+var code=(location.hash||'').replace(/^#/,'').trim();var API='https://scootscout-api.replit.app';
+var $=function(id){return document.getElementById(id)};
+var map=null,marker=null,centered=false;
+function hhmm(d){return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
+function ensureMap(){if(map||!window.L)return;map=L.map('map',{zoomControl:false,attributionControl:true}).setView([32.08,34.78],12);L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map)}
+function show(view){
+ if(!view){$('state').textContent='לא נמצא';$('title').textContent='הקישור לא פעיל';$('eta').textContent='–';$('dist').textContent='';$('sub').textContent='הקישור הזה פג, הופסק, או שגוי. בקשו מהרוכב קישור חדש.';return}
+ var who=view.name?view.name:'הרוכב';
+ if(view.status==='ended'){$('state').textContent=view.arrived?'הגיע/ה':'הסתיים';$('title').textContent=view.arrived?who+' הגיע/ה בשלום':'השיתוף הסתיים';$('eta').textContent=hhmm(new Date(view.at));$('dist').textContent='';$('sub').textContent=view.arrived?'הרכיבה הסתיימה ביעד.':'הרוכב הפסיק את השיתוף או שעברו 3 שעות.';$('title').className=view.arrived?'ok':'';return}
+ $('state').textContent='חי';$('title').textContent=who+' בדרך'+(view.destination?' ל'+view.destination:'');
+ var p=view.position;
+ if(!p){$('eta').textContent='–';$('dist').textContent='';$('sub').textContent='מחכים למיקום מהטלפון של הרוכב…';return}
+ if(p.etaS!=null){var at=new Date(Date.now()+p.etaS*1000);$('eta').textContent='הגעה '+hhmm(at)}else{$('eta').textContent='רוכב/ת'}
+ $('dist').textContent=p.remainingM!=null?(p.remainingM>=1000?(p.remainingM/1000).toFixed(1)+' ק״מ':Math.round(p.remainingM)+' מ׳')+' עד היעד':'';
+ $('sub').textContent='עודכן '+hhmm(new Date(p.at))+' · מתעדכן כל 10 שניות';
+ ensureMap();if(map){var ll=[p.lat,p.lon];if(!marker){marker=L.circleMarker(ll,{radius:10,color:'#fff',weight:3,fillColor:'#FF8A33',fillOpacity:1}).addTo(map)}else{marker.setLatLng(ll)}if(!centered){map.setView(ll,16);centered=true}}
+}
+async function poll(){
+ if(!code){show(null);return}
+ try{var r=await fetch(API+'/eta/'+encodeURIComponent(code),{headers:{accept:'application/json'},cache:'no-store'});if(r.status===404){show(null);return}if(!r.ok){$('state').textContent='שגיאה';return}show(await r.json())}
+ catch(e){$('state').textContent='אין רשת'}
+}
+ensureMap();poll();setInterval(poll,10000);
+})();
+</script>
+</body>
+</html>

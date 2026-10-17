@@ -12,7 +12,7 @@
 <link rel="canonical" href="https://scootscout.com/business/portal">
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
-<script async crossorigin="anonymous" data-clerk-publishable-key="pk_live_Y2xlcmsuc2Nvb3RzY291dC5jb20k" src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@6.37.0/dist/clerk.browser.js" type="text/javascript"></script><script>
+<script async crossorigin="anonymous" data-clerk-publishable-key="pk_live_Y2xlcmsuc2Nvb3RzY291dC5jb20k" src="https://cdn.jsdelivr.net/npm/@clerk/clerk-js@5.128.0/dist/clerk.browser.js" type="text/javascript"></script><script>
 window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
 gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied'});
 (function(){var K='sc_consent',Y=365*864e5;function read(){try{var v=JSON.parse(localStorage.getItem(K)||'null');if(v&&v.at&&Date.now()-Date.parse(v.at)<Y)return v}catch(e){}return null}
@@ -256,11 +256,11 @@ var h=(location.hash||'').slice(1);if(h.indexOf('edit-')===0){renderEditor(h.sli
 addEventListener('hashchange',function(){var h=(location.hash||'').slice(1);if(h.indexOf('edit-')===0)renderEditor(h.slice(5));else if(h==='new')renderEditor(null)});
 
 var CLERK_APPEARANCE={
- variables:{colorPrimary:'#FF8A33',colorPrimaryForeground:'#12161C',colorBackground:'#1A1F27',colorForeground:'#EEF3EF',colorMutedForeground:'#9FB3A8',colorInput:'#12161C',colorInputForeground:'#EEF3EF',colorNeutral:'#EEF3EF',colorDanger:'#FF4D4F',colorBorder:'#313947',borderRadius:'14px',fontFamily:'Heebo, system-ui, sans-serif',fontSize:'15px'},
+ variables:{colorPrimary:'#FF8A33',colorTextOnPrimaryBackground:'#12161C',colorBackground:'#1A1F27',colorText:'#EEF3EF',colorTextSecondary:'#9FB3A8',colorInputBackground:'#12161C',colorInputText:'#EEF3EF',colorNeutral:'#EEF3EF',colorDanger:'#FF4D4F',colorShimmer:'rgba(255,255,255,.2)',borderRadius:'14px',fontFamily:'Heebo, system-ui, sans-serif',fontSize:'15px'},
  layout:{socialButtonsVariant:'blockButton',socialButtonsPlacement:'top',logoPlacement:'none'},
  elements:{rootBox:{width:'100%'},cardBox:{width:'100%',boxShadow:'none',border:'0'},card:{background:'transparent',boxShadow:'none',border:'0',padding:'4px'},footer:{background:'transparent'},socialButtonsBlockButton__github:{display:'none'},socialButtonsIconButton__github:{display:'none'},headerTitle:{fontSize:'24px',fontWeight:'800'},formButtonPrimary:{fontWeight:'800',fontSize:'16px',height:'48px'},socialButtonsBlockButton:{height:'48px',fontSize:'15px'}}
 };
-async function clerkLocalization(){try{var m=await import('https://cdn.jsdelivr.net/npm/@clerk/localizations@4.20.0/+esm');var he=m.heIL||{};return Object.assign({},he,{
+async function clerkLocalization(){try{var m=await import('https://cdn.jsdelivr.net/npm/@clerk/localizations@3.37.9/+esm');var he=m.heIL||{};return Object.assign({},he,{
  signIn:Object.assign({},he.signIn,{start:Object.assign({},he.signIn&&he.signIn.start,{title:'כניסה לפורטל העסקים',subtitle:'עם החשבון של העסק',actionText:'אין עדיין חשבון?',actionLink:'פתיחת חשבון'})}),
  signUp:Object.assign({},he.signUp,{start:Object.assign({},he.signUp&&he.signUp.start,{title:'פתיחת חשבון לעסק',subtitle:'אחרי זה ממלאים את פרטי העסק',actionText:'כבר יש חשבון?',actionLink:'כניסה'})})})}catch(e){return undefined}}
 async function start(){var loc=await clerkLocalization();try{await window.Clerk.load({appearance:CLERK_APPEARANCE,localization:loc})}catch(e){loading.textContent='ההתחברות לא נטענה. רעננו את הדף.';return}

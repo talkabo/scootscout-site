@@ -44,8 +44,9 @@ function ensureMap(){if(map||!window.L)return;map=L.map('map',{zoomControl:false
 function show(view){
  if(!view){$('state').textContent='לא נמצא';$('title').textContent='הקישור לא פעיל';$('eta').textContent='–';$('dist').textContent='';$('sub').textContent='הקישור הזה פג, הופסק, או שגוי. בקשו מהרוכב קישור חדש.';return}
  var who=view.name?view.name:'הרוכב';
+ if(view.status==='idle'){$('state').textContent='לא ברכיבה';$('title').className=view.last&&view.last.arrived?'ok':'';$('title').textContent=who+' לא רוכב/ת עכשיו';var l=view.last;$('eta').textContent=l?hhmm(new Date(l.at)):'–';$('dist').textContent='';$('sub').textContent=l?(l.arrived?'הרכיבה האחרונה הסתיימה ביעד'+(l.destination?' ('+l.destination+')':'')+'. ':'הרכיבה האחרונה הסתיימה. '):'עוד לא הייתה רכיבה עם הקישור הזה. ';$('sub').textContent+='כשתתחיל רכיבה, המיקום יופיע כאן לבד.';if(marker&&map){map.removeLayer(marker);marker=null;centered=false}return}
  if(view.status==='ended'){$('state').textContent=view.arrived?'הגיע/ה':'הסתיים';$('title').textContent=view.arrived?who+' הגיע/ה בשלום':'השיתוף הסתיים';$('eta').textContent=hhmm(new Date(view.at));$('dist').textContent='';$('sub').textContent=view.arrived?'הרכיבה הסתיימה ביעד.':'הרוכב הפסיק את השיתוף או שעברו 3 שעות.';$('title').className=view.arrived?'ok':'';return}
- $('state').textContent='חי';$('title').textContent=who+' בדרך'+(view.destination?' ל'+view.destination:'');
+ $('state').textContent='חי';$('title').className='';$('title').textContent=who+' בדרך'+(view.destination?' ל'+view.destination:'');
  var p=view.position;
  if(!p){$('eta').textContent='–';$('dist').textContent='';$('sub').textContent='מחכים למיקום מהטלפון של הרוכב…';return}
  if(p.etaS!=null){var at=new Date(Date.now()+p.etaS*1000);$('eta').textContent='הגעה '+hhmm(at)}else{$('eta').textContent='רוכב/ת'}

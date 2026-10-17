@@ -109,6 +109,10 @@ main.portal{max-width:1100px;padding:28px 16px 72px}
 .portal .account{display:flex;align-items:center;gap:6px 14px;flex-wrap:wrap;margin:-10px 0 20px;color:var(--muted);font-size:14px}.portal .account[hidden]{display:none}
 .portal .linkish{background:none;border:0;padding:0;font:inherit;font-size:14px;color:var(--link);text-decoration:underline;cursor:pointer}
 .portal .choice{display:grid;gap:12px}@media (min-width:720px){.portal .choice{grid-template-columns:1fr 1fr}}
+.portal ol.steps{list-style:none;padding:0;margin:8px 0 18px;display:grid;gap:12px}.portal .step{display:flex;gap:14px;align-items:flex-start}
+.portal .step .num{flex:none;width:34px;height:34px;border-radius:17px;display:grid;place-items:center;font-weight:900;background:var(--bg);border:1px solid var(--border);color:var(--muted)}
+.portal .step b{font-size:16px}.portal .step p{margin:2px 0 0;color:var(--muted);font-size:14px}
+.portal .step.done .num{background:var(--green);border-color:var(--green);color:#12161C}.portal .step.current .num{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}.portal .step.blocked .num{border-color:var(--red);color:var(--red)}.portal .step.locked{opacity:.6}
 .portal .choice .card{background:var(--bg);border:1px solid var(--border);border-radius:18px;padding:18px}.portal .choice h3{margin:0 0 6px;font-size:17px}.portal .choice p{margin:0 0 14px;color:var(--muted);font-size:14px}
 .portal .muted{color:var(--muted);font-size:14px}
 </style>
@@ -118,7 +122,7 @@ main.portal{max-width:1100px;padding:28px 16px 72px}
 <header><div class="top"><a href="/" class="logo" aria-label="ScootScout"><svg viewBox="0 0 100 100" aria-hidden="true"><rect width="100" height="100" rx="22.37" fill="#FF6A13"/><path d="M68 26 C58 17 32 19 32 35 C32 50 68 47 68 63 C68 79 42 82 31 73" fill="none" stroke="#12161C" stroke-width="15" stroke-linecap="round"/><path d="M68 26 C58 17 32 19 32 35 C32 50 68 47 68 63 C68 79 42 82 31 73" fill="none" stroke="#FFFFFF" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="4.5 5"/><circle cx="68" cy="26" r="7.5" fill="#FFFFFF"/><circle cx="68" cy="26" r="3.2" fill="#12161C"/></svg><b>Scoot<span>Scout</span></b></a>
 <nav aria-label="ניווט ראשי"><a href="/#how">איך זה עובד</a><a href="/#faq">שאלות נפוצות</a><a href="/install">התקנה</a><a href="/support">תמיכה</a></nav><a class="cta small" href="/install">גישה מוקדמת</a></div></header>
 <main id="main" class="portal">
-<div class="bar"><h1>פורטל עסקים</h1><span id="biz-status"></span><nav class="tabs" id="tabs" hidden><a href="#overview">סקירה</a><a href="#listings">המודעות שלי</a><a href="#payments">תשלומים</a><a href="#details">פרטי העסק</a></nav></div>
+<div class="bar"><h1>פורטל עסקים</h1><span id="biz-status"></span><nav class="tabs" id="tabs" hidden><a href="#overview">סקירה</a><a href="#listings" data-approved>המודעות שלי</a><a href="#payments" data-approved>תשלומים</a><a href="#details">פרטי העסק</a></nav></div>
 <div class="account" id="account" hidden><span id="who"></span><button type="button" class="linkish" id="switch">החלפת חשבון</button><button type="button" class="linkish" id="signout">התנתקות</button></div>
 <div id="loading" class="muted">טוען…</div>
 <div id="signin-wrap" class="auth" hidden>
@@ -144,7 +148,7 @@ var biz=null,me=null;
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function day(iso){if(!iso)return '—';var d=new Date(iso);return d.getDate()+'.'+(d.getMonth()+1)+'.'+d.getFullYear()}
 function ils(n){return '₪'+Number(n||0).toLocaleString('en-US')}
-var DEMO=/[?&]demo=(1|nobiz)/.test(location.search),DEMO_NOBIZ=/[?&]demo=nobiz/.test(location.search);
+var DEMO=/[?&]demo=(1|nobiz|pending)/.test(location.search),DEMO_NOBIZ=/[?&]demo=nobiz/.test(location.search),DEMO_PENDING=/[?&]demo=pending/.test(location.search);
 // Demo mode (?demo=1): the portal with sample data and no sign-in, to see every view before a business exists.
 var demoBiz={id:'biz_demo',name:'גלגלים בע״מ',regNumber:'515123456',verified:true,status:'verified',phone:'03-1234567',whatsapp:'050-1234567',website:'https://galgalim.example',address:'רח׳ הארבעה 12',city:'תל אביב-יפו',cancellationPolicy:'אפשר לבטל עסקה עד 14 יום מקבלת המוצר, לפי חוק הגנת הצרכן. ההחזר תוך 14 יום, בניכוי דמי ביטול עד 5% או 100 ₪ הנמוך מביניהם.',email:'shop@galgalim.example',contactName:'רונן',packageUntil:new Date(Date.now()+20*864e5).toISOString(),packageActive:true,listingCap:20,activeListings:3,due:{count:1,amountIls:49},prices:PRICES,paymentInstructions:'העברה בנקאית: בנק הפועלים, סניף 123, חשבון 456789, ע״ש ScootScout. או bit ל-050-0000000. שלחו אסמכתא ל-business@scootscout.com.'};
 var demoListings=[
@@ -157,7 +161,7 @@ var demoPayments=[
 {id:'p2',kind:'promotion',description:'קידום "תיקון וטיפול שנתי" ל-1 שבוע',amountIls:49,status:'paid',invoiceNumber:'2026-0017',createdAt:new Date(Date.now()-9*864e5).toISOString(),paidAt:new Date(Date.now()-8*864e5).toISOString()},
 {id:'p3',kind:'package',description:'חבילה חודשית (1 חודש, עד 20 מודעות)',amountIls:149,status:'paid',invoiceNumber:'2026-0012',createdAt:new Date(Date.now()-11*864e5).toISOString(),paidAt:new Date(Date.now()-10*864e5).toISOString()}];
 async function demoApi(path,opt){var m=(opt&&opt.method)||'GET';await new Promise(function(r){setTimeout(r,120)});
-if(path==='/business/me'&&m==='GET'){if(DEMO_NOBIZ){var e=new Error('no business');e.status=404;throw e}return demoBiz}if(path==='/business/stats')return {views:5090,listings:4,inquiries:78,activePromotions:1,packageActive:true,packageUntil:demoBiz.packageUntil};
+if(path==='/business/me'&&m==='GET'){if(DEMO_NOBIZ){var e=new Error('no business');e.status=404;throw e}return DEMO_PENDING?Object.assign({},demoBiz,{status:'pending',verified:false,packageActive:false,packageUntil:null}):demoBiz}if(path==='/business/stats')return {views:5090,listings:4,inquiries:78,activePromotions:1,packageActive:true,packageUntil:demoBiz.packageUntil};
 if(path==='/business/listings'&&m==='GET')return demoListings;if(path==='/business/listings'&&m==='POST'){var l=Object.assign({id:'l'+Date.now(),status:'active',publishedAt:new Date().toISOString(),expiresAt:new Date(Date.now()+90*864e5).toISOString(),promoted:false,viewCount:0,inquiries:0,photoCount:0},opt.body);demoListings.unshift(l);return l}
 if(path==='/business/payments')return {items:demoPayments,paymentInstructions:demoBiz.paymentInstructions};if(path==='/business/package'){var p={id:'p'+Date.now(),kind:'package',description:'חבילה חודשית',amountIls:149,status:'due',invoiceNumber:null,createdAt:new Date().toISOString(),paidAt:null};demoPayments.unshift(p);return p}
 if(path.indexOf('/promote')>0){var q={id:'p'+Date.now(),kind:'promotion',description:'קידום ל-1 שבוע',amountIls:49,status:'due',invoiceNumber:null,createdAt:new Date().toISOString(),paidAt:null};demoPayments.unshift(q);return {payment:q,promotion:{}}}
@@ -173,8 +177,10 @@ if(!r.ok){var e=new Error((d&&d.error&&d.error.message)||('שגיאה '+r.status
 function msg(el,cls,text){el.className='msg show '+cls;el.textContent=text}
 function statusBadge(b){if(!b)return '';var cls=b.status==='verified'?(b.packageActive?'ok':'warn'):b.status==='suspended'?'bad':'warn';
 var txt=b.status==='pending'?'ממתין לאימות':b.status==='suspended'?'מושעה':b.packageActive?'חבילה פעילה עד '+day(b.packageUntil):'מאומת · בלי חבילה';return '<span class="badge '+cls+'">'+esc(b.name)+' · '+txt+'</span>'}
-function route(){var h=(location.hash||'#overview').slice(1);if(h==='new'||h.indexOf('edit-')===0)return;if(!biz)h=h==='register'?'register':'welcome';tabs.querySelectorAll('a').forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+h)});
-({welcome:renderWelcome,register:renderRegister,overview:renderOverview,listings:renderListings,payments:renderPayments,details:renderDetails}[h]||renderOverview)()}
+function approved(){return !!biz&&biz.status==='verified'}
+function route(){var h=(location.hash||'#overview').slice(1);if(h==='new'||h.indexOf('edit-')===0){if(!approved())location.hash='#overview';return}if(!biz)h=h==='register'?'register':'welcome';else if(!approved()&&h!=='details')h='pending';
+tabs.querySelectorAll('[data-approved]').forEach(function(a){a.hidden=!approved()});tabs.querySelectorAll('a').forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+h)});
+({welcome:renderWelcome,register:renderRegister,pending:renderPending,overview:renderOverview,listings:renderListings,payments:renderPayments,details:renderDetails}[h]||renderOverview)()}
 addEventListener('hashchange',route);
 
 function bizForm(b){b=b||{};return '<div class="two">'+
@@ -190,6 +196,12 @@ function bizForm(b){b=b||{};return '<div class="two">'+
 '</div><label class="field"><span>מדיניות ביטול והחזרה (מוצגת בכל מודעה; חוק הגנת הצרכן: 14 יום במכר מרחוק)</span><textarea name="cancellationPolicy" required maxlength="600">'+esc(b.cancellationPolicy||'אפשר לבטל עסקה עד 14 יום מקבלת המוצר, לפי חוק הגנת הצרכן. ההחזר תוך 14 יום, בניכוי דמי ביטול עד 5% או 100 ₪ הנמוך מביניהם. מוצר שנפתח ונעשה בו שימוש: לפי החוק.')+'</textarea></label>'}
 function formData(f){var o={};new FormData(f).forEach(function(v,k){v=String(v).trim();if(v)o[k]=v});return o}
 
+// Until ScootScout approves the business: what happens next, and only the business details can be edited.
+function renderPending(){tabs.hidden=false;var sus=biz.status==='suspended';
+function step(n,state,title,sub){return '<li class="step '+state+'"><span class="num">'+(state==='done'?'✓':n)+'</span><div><b>'+title+'</b><p>'+sub+'</p></div></li>'}
+view.innerHTML='<div class="panel"><h2>'+(sus?'החשבון של העסק מושעה':'הבקשה של '+esc(biz.name)+' בבדיקה')+'</h2><p class="sub">'+(sus?'אי אפשר לפרסם או לשלם עד שההשעיה תוסר. לפרטים: business@scootscout.com':'אנחנו בודקים את מספר ח.פ. / עוסק מורשה מול רשם החברות או רשות המסים, בדרך כלל תוך יום עסקים. תקבלו מייל והודעה כשהעסק מאושר.')+'</p>'+
+'<ol class="steps">'+step(1,'done','נרשמתם','החשבון והפרטים של העסק נשמרו.')+step(2,sus?'blocked':'current','אישור ScootScout',sus?'מושעה':'בבדיקה')+step(3,'locked','חבילה ותשלום','נפתח אחרי האישור: חבילה חודשית '+ils(PRICES.packageIls)+' כולל מע״מ.')+step(4,'locked','פרסום מודעות','עד '+PRICES.listingCap+' מודעות פעילות, וקידום לפי בחירה.')+'</ol>'+
+'<div class="row"><a class="cta small ghost" href="#details">עריכת פרטי העסק</a></div></div>'}
 function renderWelcome(){tabs.hidden=true;view.innerHTML='<div class="panel"><h2>אין עסק רשום בחשבון הזה</h2><p class="sub">'+(whoText()?'נכנסת כ-<b>'+esc(whoText())+'</b>. ':'')+'כל עסק מחובר לחשבון אחד. מה תרצו לעשות?</p><div class="choice">'+
 '<div class="card"><h3>לרשום עסק חדש</h3><p>שם העסק, ח.פ. או עוסק מורשה, כתובת, טלפון ומדיניות ביטול. אחרי אימות אפשר להזמין חבילה ולפרסם.</p><a class="cta small" href="#register">הרשמת עסק</a></div>'+
 '<div class="card"><h3>העסק רשום בחשבון אחר</h3><p>נרשמתם עם Apple ועכשיו נכנסתם עם Google (או להפך)? מתנתקים ונכנסים עם החשבון של העסק.</p><button class="cta small ghost" type="button" id="welcome-switch">כניסה עם חשבון אחר</button></div>'+
@@ -199,7 +211,7 @@ function showAccount(){var a=document.getElementById('account');a.hidden=false;d
 async function switchAccount(){if(DEMO){location.hash='#welcome';return}await window.Clerk.signOut();location.hash='';location.reload()}
 function renderRegister(){tabs.hidden=true;view.innerHTML='<div class="panel"><h2>הרשמה כעסק</h2><p class="sub">'+(whoText()?'העסק יירשם על החשבון <b>'+esc(whoText())+'</b>. ':'')+'חשבון אחד לעסק. אחרי ההרשמה נאמת את המספר ברשם החברות או ברשות המסים ונאשר. ההרשמה מהווה הסכמה ל<a href="/business/terms">תקנון העסקים</a>.</p><form id="reg">'+bizForm()+'<button class="cta" type="submit">הרשמה</button><p class="msg" role="alert"></p></form></div>';
 var f=document.getElementById('reg'),m=f.querySelector('.msg');f.addEventListener('submit',async function(e){e.preventDefault();var b=f.querySelector('button');b.disabled=true;
-try{biz=await api('/business',{method:'POST',body:formData(f)});location.hash='#overview';boot()}catch(err){msg(m,'err',err.code==='invalid_reg_number'?'מספר ח.פ. או עוסק מורשה: 9 ספרות.':err.code==='exists'?'יש כבר עסק על החשבון הזה.':err.message)}b.disabled=false})}
+try{biz=await api('/business',{method:'POST',body:formData(f)});location.hash='#pending';boot()}catch(err){msg(m,'err',err.code==='invalid_reg_number'?'מספר ח.פ. או עוסק מורשה: 9 ספרות.':err.code==='exists'?'יש כבר עסק על החשבון הזה.':err.message)}b.disabled=false})}
 
 async function renderOverview(){tabs.hidden=false;var s=null;try{s=await api('/business/stats')}catch(e){}
 var pkg=biz.packageActive?'<p>החבילה פעילה עד <b>'+day(biz.packageUntil)+'</b>. חידוש: בקשה נוספת מוסיפה חודש מהתאריך הזה.</p>':biz.status!=='verified'?'<p>החבילה זמינה אחרי אימות העסק.</p>':'<p>בלי חבילה פעילה המודעות לא מוצגות. חבילה חודשית: <b>'+ils(PRICES.packageIls)+'</b> כולל מע״מ, עד '+PRICES.listingCap+' מודעות.</p>';

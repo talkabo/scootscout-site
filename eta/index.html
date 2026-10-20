@@ -7,7 +7,7 @@
 <meta name="referrer" content="no-referrer">
 <title>ScootScout · בדרך</title>
 <link rel="icon" href="/favicon.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" integrity="sha384-c6Rcwz4e4CITMbu/NBmnNS8yN2sC3cUElMEMfP3vqqKFp7GOYaaBBCqmaWBjmkjb" crossorigin="anonymous" referrerpolicy="no-referrer">
 <style>
 :root{color-scheme:dark light;--bg:#12161C;--surface:#1A1F27;--text:#EEF3EF;--muted:#9FB3A8;--accent:#FF8A33;--on-accent:#12161C;--green:#4ADE80;--border:#313947}
 @media (prefers-color-scheme: light){:root{--bg:#F4F1EA;--surface:#FFFFFF;--text:#12161C;--muted:#5B6470;--accent:#FF7A1A;--green:#22C55E;--border:#E3DED3}}
@@ -21,7 +21,20 @@ header img{height:28px}header b{font-size:17px}
 .big{font-size:40px;font-weight:900;line-height:1}
 .row{display:flex;gap:16px;align-items:baseline}
 .ok{color:var(--green)}.pill{display:inline-block;padding:4px 10px;border-radius:12px;background:var(--border);font-size:13px;color:var(--text)}
-.leaflet-container{font:inherit}
+.leaflet-container{font:inherit;background:#1B222C}
+/* The OpenStreetMap tiles, recoloured to the app's dark map (same tiles, same attribution, no extra provider). */
+.leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.86) saturate(.32)}
+@media (prefers-color-scheme: light){.leaflet-container{background:#E8E4DA}.leaflet-tile-pane{filter:saturate(.45) contrast(.94) brightness(1.03)}}
+.leaflet-control-attribution{background:color-mix(in srgb,var(--bg) 70%,transparent)!important;color:var(--muted)!important;font-size:10px;border-top-left-radius:8px}
+.leaflet-control-attribution a{color:var(--muted)!important}
+.me{position:relative}.me .dot{position:absolute;inset:7px;border-radius:50%;background:var(--accent);border:3px solid #fff;box-shadow:0 2px 10px rgba(0,0,0,.55)}
+.me .pulse{position:absolute;inset:0;border-radius:50%;background:var(--accent);opacity:0;animation:pulse 2s ease-out infinite}
+@keyframes pulse{from{transform:scale(.5);opacity:.55}to{transform:scale(2.4);opacity:0}}
+@media (prefers-reduced-motion: reduce){.me .pulse{animation:none}}
+/* Not riding / ended: the map stays as context, greyed, and the marker stops pulsing. */
+body.off .leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.7) contrast(.8) saturate(0)}
+@media (prefers-color-scheme: light){body.off .leaflet-tile-pane{filter:saturate(0) brightness(1.05) contrast(.85)}}
+body.off .me .pulse{display:none}body.off .me .dot{background:var(--muted)}
 </style>
 </head>
 <body>
@@ -33,26 +46,33 @@ header img{height:28px}header b{font-size:17px}
 <p id="sub">הדף מתעדכן כל 10 שניות. רק בזמן הרכיבה הזאת, בהסכמת הרוכב.</p>
 <p id="foot">אין מיקום בדף הזה מלבד של הרוכב ששיתף. ScootScout לא עוקבת אחרי מי שצופה.</p>
 </section>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" integrity="sha384-NElt3Op+9NBMCYaef5HxeJmU4Xeard/Lku8ek6hoPTvYkQPh3zLIrJP7KiRocsxO" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 (function(){
 var code=(location.hash||'').replace(/^#/,'').trim();var API='https://scootscout-api.replit.app';
 var $=function(id){return document.getElementById(id)};
-var map=null,marker=null,centered=false;
+var map=null,marker=null,trail=null,trailPts=[],centered=false;
 function hhmm(d){return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
-function ensureMap(){if(map||!window.L)return;map=L.map('map',{zoomControl:false,attributionControl:true}).setView([32.08,34.78],12);L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OpenStreetMap'}).addTo(map)}
+function ensureMap(){if(map||!window.L)return;map=L.map('map',{zoomControl:false,attributionControl:true}).setView([32.08,34.78],12);map.attributionControl.setPrefix(false);L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>'}).addTo(map)}
+function riderIcon(){return L.divIcon({className:'me',html:'<span class="pulse"></span><span class="dot"></span>',iconSize:[34,34],iconAnchor:[17,17]})}
+function setOff(off){document.body.classList.toggle('off',!!off)}
 function show(view){
  if(!view){$('state').textContent='לא נמצא';$('title').textContent='הקישור לא פעיל';$('eta').textContent='–';$('dist').textContent='';$('sub').textContent='הקישור הזה פג, הופסק, או שגוי. בקשו מהרוכב קישור חדש.';return}
  var who=view.name?view.name:'הרוכב';
- if(view.status==='idle'){$('state').textContent='לא ברכיבה';$('title').className=view.last&&view.last.arrived?'ok':'';$('title').textContent=who+' לא רוכב/ת עכשיו';var l=view.last;$('eta').textContent=l?hhmm(new Date(l.at)):'–';$('dist').textContent='';$('sub').textContent=l?(l.arrived?'הרכיבה האחרונה הסתיימה ביעד'+(l.destination?' ('+l.destination+')':'')+'. ':'הרכיבה האחרונה הסתיימה. '):'עוד לא הייתה רכיבה עם הקישור הזה. ';$('sub').textContent+='כשתתחיל רכיבה, המיקום יופיע כאן לבד.';if(marker&&map){map.removeLayer(marker);marker=null;centered=false}return}
- if(view.status==='ended'){$('state').textContent=view.arrived?'הגיע/ה':'הסתיים';$('title').textContent=view.arrived?who+' הגיע/ה בשלום':'השיתוף הסתיים';$('eta').textContent=hhmm(new Date(view.at));$('dist').textContent='';$('sub').textContent=view.arrived?'הרכיבה הסתיימה ביעד.':'הרוכב הפסיק את השיתוף או שעברו 3 שעות.';$('title').className=view.arrived?'ok':'';return}
- $('state').textContent='חי';$('title').className='';$('title').textContent=who+' בדרך'+(view.destination?' ל'+view.destination:'');
+ if(view.status==='idle'){$('state').textContent='לא ברכיבה';$('title').className=view.last&&view.last.arrived?'ok':'';$('title').textContent=who+' לא רוכב/ת עכשיו';var l=view.last;$('eta').textContent=l?hhmm(new Date(l.at)):'–';$('dist').textContent='';$('sub').textContent=l?(l.arrived?'הרכיבה האחרונה הסתיימה ביעד'+(l.destination?' ('+l.destination+')':'')+'. ':'הרכיבה האחרונה הסתיימה. '):'עוד לא הייתה רכיבה עם הקישור הזה. ';$('sub').textContent+='כשתתחיל רכיבה, המיקום יופיע כאן לבד.';setOff(true);if(marker&&map){map.removeLayer(marker);marker=null;centered=false}if(trail&&map){map.removeLayer(trail);trail=null;trailPts=[]}return}
+ if(view.status==='ended'){$('state').textContent=view.arrived?'הגיע/ה':'הסתיים';$('title').textContent=view.arrived?who+' הגיע/ה בשלום':'השיתוף הסתיים';$('eta').textContent=hhmm(new Date(view.at));$('dist').textContent='';$('sub').textContent=view.arrived?'הרכיבה הסתיימה ביעד.':'הרוכב הפסיק את השיתוף או שעברו 3 שעות.';$('title').className=view.arrived?'ok':'';setOff(true);return}
+ setOff(false);$('state').textContent='חי';$('title').className='';$('title').textContent=who+' בדרך'+(view.destination?' ל'+view.destination:'');
  var p=view.position;
  if(!p){$('eta').textContent='–';$('dist').textContent='';$('sub').textContent='מחכים למיקום מהטלפון של הרוכב…';return}
  if(p.etaS!=null){var at=new Date(Date.now()+p.etaS*1000);$('eta').textContent='הגעה '+hhmm(at)}else{$('eta').textContent='רוכב/ת'}
  $('dist').textContent=p.remainingM!=null?(p.remainingM>=1000?(p.remainingM/1000).toFixed(1)+' ק״מ':Math.round(p.remainingM)+' מ׳')+' עד היעד':'';
  $('sub').textContent='עודכן '+hhmm(new Date(p.at))+' · מתעדכן כל 10 שניות';
- ensureMap();if(map){var ll=[p.lat,p.lon];if(!marker){marker=L.circleMarker(ll,{radius:10,color:'#fff',weight:3,fillColor:'#FF8A33',fillOpacity:1}).addTo(map)}else{marker.setLatLng(ll)}if(!centered){map.setView(ll,16);centered=true}}
+ ensureMap();if(map){var ll=[p.lat,p.lon];
+  // The trail is only what this page saw while open; nothing older is fetched or kept.
+  var last=trailPts[trailPts.length-1];if(!last||last[0]!==ll[0]||last[1]!==ll[1]){trailPts.push(ll);if(trailPts.length>360)trailPts.shift()}
+  if(trailPts.length>1){if(!trail){trail=L.polyline(trailPts,{color:'#FF8A33',weight:5,opacity:.85,lineCap:'round',lineJoin:'round'}).addTo(map)}else{trail.setLatLngs(trailPts)}}
+  if(!marker){marker=L.marker(ll,{icon:riderIcon(),keyboard:false,interactive:false}).addTo(map)}else{marker.setLatLng(ll);if(marker.bringToFront)marker.bringToFront()}
+  if(!centered){map.setView(ll,16);centered=true}else if(!map.getBounds().pad(-0.15).contains(ll)){map.panTo(ll)}}
 }
 async function poll(){
  if(!code){show(null);return}

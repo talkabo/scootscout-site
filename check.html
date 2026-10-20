@@ -114,11 +114,12 @@ main.check{max-width:720px;padding:40px 16px 72px}
 <script>(function(){var f=document.getElementById('check-form'),q=document.getElementById('check-q'),r=document.getElementById('check-result'),foot=document.getElementById('check-foot');
 function show(cls,h){r.className='result show '+cls;r.innerHTML=h}
 function day(iso){var p=iso.split('-');return p[2]+'.'+Number(p[1])+'.'+p[0]}
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 f.addEventListener('submit',async function(e){e.preventDefault();var v=q.value.trim();if(v.length<3)return;show('err','<p>בודקים…</p>');
 try{var res=await fetch('https://scootscout-api.replit.app/check?q='+encodeURIComponent(v),{headers:{accept:'application/json'}});var d=await res.json().catch(function(){return {}});
 if(res.status===429){show('err','<h2>יותר מדי בדיקות</h2><p>נסו שוב בעוד שעה.</p>');return}
 if(!res.ok){show('err','<h2>לא הצלחנו לבדוק</h2><p>'+(d&&d.error&&d.error.code==='invalid_query'?'צריך מספר לוחית או שלדה מלא.':'נסו שוב בעוד רגע.')+'</p>');return}
-if(d.status==='stolen'){show('stolen','<h2>מסומן כגנוב</h2><p><b>'+d.make+', '+d.color+'</b> · סומן ב-'+day(d.since)+'</p><p>קונים? אל תקנו. אפשר לפנות למשטרה 100. הבעלים קיבל הודעה שהכלי נבדק, בלי פרטים עליכם.</p><p>ראיתם אותו? <a href="/install?ref=check">פתחו את ScootScout</a> ושלחו לבעלים "ראיתי כאן".</p>')}
+if(d.status==='stolen'){show('stolen','<h2>מסומן כגנוב</h2><p><b>'+esc(d.make)+', '+esc(d.color)+'</b> · סומן ב-'+day(d.since)+'</p><p>קונים? אל תקנו. אפשר לפנות למשטרה 100. הבעלים קיבל הודעה שהכלי נבדק, בלי פרטים עליכם.</p><p>ראיתם אותו? <a href="/install?ref=check">פתחו את ScootScout</a> ושלחו לבעלים "ראיתי כאן".</p>')}
 else{show('clean','<h2>לא מסומן אצלנו</h2><p>אף אחד לא סימן את הכלי הזה כגנוב ב-ScootScout. זה לא אישור שהכלי לא גנוב, רק שלא דווח לנו.</p>')}
 if(typeof d.registered==='number')foot.textContent=d.registered.toLocaleString('he-IL')+' כלים רשומים · "לא מסומן" אומר רק שאף אחד לא סימן את הכלי אצלנו, לא שהוא לא גנוב. בכל מקרה: משטרה 100.'}
 catch(err){show('err','<h2>אין חיבור</h2><p>בדקו את הרשת ונסו שוב.</p>')}})})();</script>

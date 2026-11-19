@@ -52,7 +52,8 @@ footer{color:var(--muted);font-size:13px;padding:28px 16px;border-top:1px solid 
 .btn-ghost{background:transparent;color:var(--text);border:1px solid var(--border);border-radius:12px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer}.btn-ghost:hover{border-color:var(--text)}
 footer .linkbtn{background:none;border:0;padding:0;font:inherit;color:var(--muted);cursor:pointer}footer .linkbtn:hover{color:var(--text)}
 .a11y-btn{position:fixed;z-index:80;inset-inline-end:12px;bottom:calc(12px + env(safe-area-inset-bottom));width:52px;height:52px;border-radius:50%;border:0;background:var(--accent);color:var(--on-accent);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.35)}.a11y-btn svg{width:30px;height:30px}
-@media (max-width:767px){.a11y-btn{bottom:calc(84px + env(safe-area-inset-bottom))}.cookie{bottom:calc(84px + env(safe-area-inset-bottom))}}
+@media (max-width:767px){.a11y-btn{bottom:calc(84px + env(safe-area-inset-bottom))}.cookie{bottom:calc(84px + env(safe-area-inset-bottom))}.cookie.top{padding:12px 14px}.cookie.top p{font-size:14px;line-height:1.45;margin-bottom:10px}}
+.cookie.top{top:calc(var(--hdr,76px) + 8px);bottom:auto}
 .a11y-panel{position:fixed;z-index:81;inset-inline-end:12px;bottom:calc(72px + env(safe-area-inset-bottom));width:min(320px,calc(100vw - 24px));background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:16px;padding:14px;box-shadow:0 12px 32px rgba(0,0,0,.35)}
 @media (max-width:767px){.a11y-panel{bottom:calc(144px + env(safe-area-inset-bottom))}}
 .a11y-panel[hidden]{display:none}.a11y-panel h2{font-size:17px;margin:0 0 10px;display:flex;justify-content:space-between;align-items:center}.a11y-panel h2 button{background:none;border:0;color:var(--muted);font-size:22px;line-height:1;cursor:pointer;padding:4px}
@@ -133,7 +134,11 @@ html.a11y-cursor,html.a11y-cursor *{cursor:url("data:image/svg+xml;utf8,<svg xml
 <div class="a11y-foot"><a href="/accessibility">הצהרת נגישות</a><button type="button" class="btn-ghost" id="a11y-reset">איפוס</button></div>
 </div>
 <script>(function(){var d=document,h=d.documentElement;
-var box=d.getElementById('cookie');function showBox(){box.hidden=false}
+var box=d.getElementById('cookie'),hd=d.querySelector('header');
+// Pages with a hero (the home page): the banner sits under the sticky header, so it never covers the download badges or the phone sticky bar.
+function hdr(){if(hd)h.style.setProperty('--hdr',hd.offsetHeight+'px')}
+if(d.querySelector('.hero')){box.classList.add('top');hdr();addEventListener('resize',hdr)}
+function showBox(){hdr();box.hidden=false}
 if(!window.scConsent.read())showBox();
 box.addEventListener('click',function(e){var b=e.target.closest('[data-consent]');if(!b)return;window.scConsent.save(b.dataset.consent==='all');box.hidden=true});
 var cs=d.getElementById('cookie-settings');if(cs)cs.addEventListener('click',function(){window.scConsent.clear();showBox();box.querySelector('[data-consent]').focus()});
